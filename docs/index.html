@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>InfiniteScript — One language. Infinite possibilities.</title>
+
+    <meta
+        name="description"
+        content="InfiniteScript is a programming language designed for applications, interfaces, animation and more."
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(59, 130, 246, 0.16),
+                    transparent 38%
+                ),
+                #070b14;
+
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 48px 48px;
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 80%
+            );
+
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            width: 100%;
+            padding: 18px 7vw;
+
+            background: rgba(7, 11, 20, 0.72);
+            backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.07);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-weight: 800;
+            font-size: 19px;
+        }
+
+        .logo {
+            display: grid;
+            place-items: center;
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #60a5fa,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 0 30px rgba(59,130,246,0.35);
+
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            transition:
+                color 160ms ease,
+                transform 160ms ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .hero {
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            max-width: 1100px;
+            margin: auto;
+
+            padding:
+                120px 24px
+                90px;
+
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border:
+                1px solid rgba(96,165,250,0.25);
+
+            border-radius: 999px;
+
+            background:
+                rgba(59,130,246,0.08);
+
+            color: #93c5fd;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            animation:
+                fadeUp 700ms ease both;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #60a5fa;
+            box-shadow: 0 0 12px #60a5fa;
+        }
+
+        h1 {
+            max-width: 900px;
+
+            margin-top: 28px;
+
+            font-size:
+                clamp(48px, 8vw, 88px);
+
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff 15%,
+                    #cbd5e1 100%
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
+            animation:
+                fadeUp 800ms 100ms ease both;
+        }
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #38bdf8
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 700px;
+
+            margin-top: 28px;
+
+            color: #94a3b8;
+
+            font-size:
+                clamp(17px, 2vw, 20px);
+
+            line-height: 1.7;
+
+            animation:
+                fadeUp 800ms 200ms ease both;
+        }
+
+        .actions {
+            display: flex;
+            gap: 14px;
+
+            margin-top: 38px;
+
+            animation:
+                fadeUp 800ms 300ms ease both;
+        }
+
+        .button {
+            padding: 14px 22px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            transition:
+                transform 180ms ease,
+                box-shadow 180ms ease,
+                background 180ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 12px 35px
+                rgba(37,99,235,0.28);
+        }
+
+        .primary:hover {
+            box-shadow:
+                0 18px 45px
+                rgba(37,99,235,0.42);
+        }
+
+        .secondary {
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            background:
+                rgba(255,255,255,0.035);
+
+            color: #cbd5e1;
+        }
+
+        .secondary:hover {
+            background:
+                rgba(255,255,255,0.07);
+        }
+
+        .notice {
+            max-width: 850px;
+
+            margin: 30px auto 0;
+            padding: 18px 20px;
+
+            border:
+                1px solid rgba(251,191,36,0.18);
+
+            border-radius: 14px;
+
+            background:
+                rgba(251,191,36,0.055);
+
+            color: #cbd5e1;
+
+            text-align: left;
+
+            animation:
+                fadeUp 800ms 400ms ease both;
+        }
+
+        .notice strong {
+            color: #fbbf24;
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: auto;
+            padding: 70px 24px;
+        }
+
+        .section-title {
+            font-size: 34px;
+            letter-spacing: -0.03em;
+        }
+
+        .section-description {
+            margin-top: 12px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-top: 32px;
+        }
+
+        .card {
+            padding: 24px;
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            transition:
+                transform 180ms ease,
+                border-color 180ms ease,
+                background 180ms ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(96,165,250,0.3);
+
+            background:
+                rgba(255,255,255,0.045);
+        }
+
+        .card-icon {
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+        }
+
+        .card p {
+            margin-top: 8px;
+
+            color: #64748b;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .code-section {
+            display: grid;
+
+            grid-template-columns:
+                0.9fr 1.1fr;
+
+            gap: 40px;
+
+            align-items: center;
+        }
+
+        .code {
+            overflow: hidden;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            background: #0b1120;
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.35);
+        }
+
+        .code-top {
+            display: flex;
+            gap: 7px;
+
+            padding: 14px 16px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+        }
+
+        .code-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #334155;
+        }
+
+        pre {
+            padding: 25px;
+
+            overflow-x: auto;
+
+            color: #cbd5e1;
+
+            font-family:
+                "Cascadia Code",
+                "JetBrains Mono",
+                Consolas,
+                monospace;
+
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .keyword {
+            color: #60a5fa;
+        }
+
+        .string {
+            color: #86efac;
+        }
+
+        footer {
+            max-width: 1100px;
+            margin: auto;
+
+            padding:
+                50px 24px
+                70px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.06);
+
+            color: #64748b;
+
+            text-align: center;
+        }
+
+        footer strong {
+            color: #94a3b8;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 850px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .code-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="nav">
+
+    <a class="brand" href="#">
+        <span class="logo">8</span>
+        InfiniteScript
+    </a>
+
+    <div class="nav-links">
+        <a href="#docs">Documentation</a>
+        <a href="#tutorial">Tutorial</a>
+        <a href="#examples">Examples</a>
+        <a href="#download">Download</a>
+    </div>
+
+</nav>
+
+<main>
+
+<section class="hero">
+
+    <div class="eyebrow">
+        <span class="dot"></span>
+        InfiniteScript v0.2.0
+    </div>
+
+    <h1>
+        One language.<br>
+        <span class="gradient-text">
+            Infinite possibilities.
+        </span>
+    </h1>
+
+    <p class="hero-description">
+        Build applications, interfaces, animations and more
+        with InfiniteScript — a programming language designed
+        to bring everything together.
+    </p>
+
+    <div class="actions">
+        <a class="button primary" href="#docs">
+            Get Started
+        </a>
+
+        <a class="button secondary" href="#examples">
+            View Examples
+        </a>
+    </div>
+
+    <div class="notice">
+        <strong>? Web Preview:</strong>
+        This website is a GitHub Pages preview of InfiniteScript.
+        Infinite UI is not used on this website because GitHub Pages
+        cannot execute the native InfiniteScript runtime.
+        The full Infinite UI experience runs natively through
+        <strong>Inf.exe</strong> on Windows.
+    </div>
+
+</section>
+
+<section class="section" id="docs">
+
+    <h2 class="section-title">
+        Documentation
+    </h2>
+
+    <p class="section-description">
+        Learn the language from the fundamentals to advanced
+        InfiniteScript systems.
+    </p>
+
+    <div class="cards">
+
+        <a class="card" href="#docs">
+            <div class="card-icon">??</div>
+            <h3>Language</h3>
+            <p>
+                Variables, expressions, conditions, loops,
+                functions and more.
+            </p>
+        </a>
+
+        <a class="card" href="#docs">
+            <div class="card-icon">??</div>
+            <h3>Infinite UI</h3>
+            <p>
+                Build native interfaces directly from
+                InfiniteScript.
+            </p>
+        </a>
+
+        <a class="card" href="#docs">
+            <div class="card-icon">?</div>
+            <h3>Animation</h3>
+            <p>
+                Create smooth animations, timelines,
+                easing and sequences.
+            </p>
+        </a>
+
+        <a class="card" href="#docs">
+            <div class="card-icon">??</div>
+            <h3>Packages</h3>
+            <p>
+                Organise and extend projects with
+                InfiniteScript packages.
+            </p>
+        </a>
+
+    </div>
+
+</section>
+
+<section class="section" id="tutorial">
+
+    <div class="code-section">
+
+        <div>
+
+            <h2 class="section-title">
+                Learn by building.
+            </h2>
+
+            <p class="section-description">
+                Start with simple programs and gradually
+                build complete applications using the
+                InfiniteScript runtime.
+            </p>
+
+        </div>
+
+        <div class="code">
+
+            <div class="code-top">
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+            </div>
+
+<pre><span class="keyword">Local Storage</span> Money = 100
+
+<span class="keyword">Function</span> GiveMoney Amount
+    <span class="keyword">Change</span> Money by Amount
+    <span class="keyword">Return</span> Money
+<span class="keyword">End</span>
+
+GiveMoney 50
+
+<span class="keyword">Say</span> Money</pre>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section" id="examples">
+
+    <h2 class="section-title">
+        Examples
+    </h2>
+
+    <p class="section-description">
+        Explore the different things you can build with
+        InfiniteScript.
+    </p>
+
+    <div class="cards">
+
+        <a class="card" href="#examples">
+            <div class="card-icon">??</div>
+            <h3>Hello World</h3>
+            <p>
+                Your first InfiniteScript program.
+            </p>
+        </a>
+
+        <a class="card" href="#examples">
+            <div class="card-icon">???</div>
+            <h3>Native UI</h3>
+            <p>
+                Create a native application interface.
+            </p>
+        </a>
+
+        <a class="card" href="#examples">
+            <div class="card-icon">??</div>
+            <h3>Animation</h3>
+            <p>
+                Animate properties using the
+                InfiniteScript animation engine.
+            </p>
+        </a>
+
+        <a class="card" href="#examples">
+            <div class="card-icon">??</div>
+            <h3>Packages</h3>
+            <p>
+                Build reusable InfiniteScript modules.
+            </p>
+        </a>
+
+    </div>
+
+</section>
+
+<section class="section" id="download">
+
+    <div class="code-section">
+
+        <div>
+            <h2 class="section-title">
+                Download InfiniteScript.
+            </h2>
+
+            <p class="section-description">
+                Run the InfiniteScript compiler and native
+                Infinite UI runtime on Windows.
+            </p>
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">??</div>
+
+            <h3>
+                Windows
+            </h3>
+
+            <p>
+                InfiniteScript v0.2.0
+            </p>
+
+            <br>
+
+            <a
+                class="button primary"
+                href="https://github.com/gameworldyt/Infinite-Script"
+                target="_blank"
+                rel="noopener"
+            >
+                View on GitHub
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    <p>
+        <strong>8 InfiniteScript</strong>
+    </p>
+
+    <br>
+
+    <p>
+        Native. Open. Infinite.
+    </p>
+
+    <br>
+
+    <p>
+        © 2026 InfiniteScript Project
+    </p>
+
+</footer>
+
+</body>
+</html>
