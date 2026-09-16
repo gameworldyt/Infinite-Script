@@ -1,0 +1,44 @@
+Package LanguageFinal
+
+Local Storage Money = 100
+Local Storage PlayerName = "Adan"
+Local Storage IsAdmin = true
+
+Function AddMoney Amount
+    Change Money by Amount
+    Return Money
+End
+
+Function DoubleMoney Amount
+    Return Amount + Amount
+End
+
+For I = 1 to 5
+    If I == 3
+        Continue
+    End
+
+    Change Money by I
+End
+
+While Money < 120
+    Change Money by 1
+
+    If Money == 118
+        Continue
+    End
+
+    If Money == 120
+        Break
+    End
+End
+
+Set Bonus = DoubleMoney 10
+
+If Money >= 120 And IsAdmin == true
+    Say "Language 1.0 complete!"
+Else If Money >= 120
+    Say "Almost complete!"
+Else
+    Say "Failed!"
+End

@@ -1,0 +1,64 @@
+﻿{
+    "scopeName": "source.infs",
+    "patterns": [
+        {
+            "name": "comment.line.infs",
+            "match": "\\/\\-.*$"
+        },
+        {
+            "name": "keyword.control.infs",
+            "match": "\\b(If|Else|Else If|End|While|For|Break|Continue|Return)\\b"
+        },
+        {
+            "name": "keyword.function.infs",
+            "match": "\\b(Function|Local Function)\\b"
+        },
+        {
+            "name": "keyword.storage.infs",
+            "match": "\\b(Local Storage|Set|Change)\\b"
+        },
+        {
+            "name": "keyword.io.infs",
+            "match": "\\b(Say|Input)\\b"
+        },
+        {
+            "name": "keyword.random.infs",
+            "match": "\\b(Random)\\b"
+        },
+        {
+            "name": "keyword.ui.infs",
+            "match": "\\b(UI|Window|Button|Text|Title|Size|On|Click)\\b"
+        },
+        {
+            "name": "keyword.package.infs",
+            "match": "\\b(Package|Import|Export)\\b"
+        },
+        {
+            "name": "constant.language.infs",
+            "match": "\\b(true|false)\\b"
+        },
+        {
+            "name": "constant.numeric.infs",
+            "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        {
+            "name": "string.quoted.double.infs",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.infs",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        {
+            "name": "keyword.operator.infs",
+            "match": "==|>=|<=|>|<|\\+|-|\\*|/"
+        },
+        {
+            "name": "entity.name.function.infs",
+            "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s)"
+        }
+    ]
+}

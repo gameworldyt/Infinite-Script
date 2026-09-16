@@ -1,0 +1,26 @@
+{
+    "scopeName": "source.info",
+    "patterns": [
+        {
+            "name": "comment.line.info",
+            "match": "/-.*$"
+        },
+        {
+            "name": "keyword.control.info",
+            "match": "\\b(Say|If|Else|End|Local|Storage|Function|Change)\\b"
+        },
+        {
+            "name": "string.quoted.double.info",
+            "begin": "\"",
+            "end": "\""
+        },
+        {
+            "name": "constant.numeric.info",
+            "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+        },
+        {
+            "name": "variable.other.info",
+            "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b"
+        }
+    ]
+}

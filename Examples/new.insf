@@ -1,0 +1,9 @@
+Local Storage Money = 75
+
+If Money >= 100
+    Say "Rich"
+Else If Money >= 50
+    Say "Doing okay"
+Else
+    Say "Poor"
+End

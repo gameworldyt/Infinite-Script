@@ -1,0 +1,95 @@
+﻿{
+    "name": "infinitescript",
+    "displayName": "InfiniteScript",
+    "description": "Official language support for the InfiniteScript programming language.",
+    "version": "0.2.0",
+    "publisher": "InfiniteScript",
+    "license": "SEE LICENSE IN ../../LICENSE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gameworldyt/Infinite-Script"
+    },
+    "homepage": "https://github.com/gameworldyt/Infinite-Script",
+    "bugs": {
+        "url": "https://github.com/gameworldyt/Infinite-Script/issues"
+    },
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Other"
+    ],
+    "keywords": [
+        "InfiniteScript",
+        "infs",
+        "Infinite UI",
+        "programming language"
+    ],
+    "main": "./extension.js",
+    "activationEvents": [
+        "onLanguage:infinite-script",
+        "onCommand:infiniteScript.run",
+        "onCommand:infiniteScript.check",
+        "onCommand:infiniteScript.build"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "infinite-script",
+                "aliases": [
+                    "InfiniteScript",
+                    "infs"
+                ],
+                "extensions": [
+                    ".infs"
+                ],
+                "configuration": "./language-configuration/language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "infinite-script",
+                "scopeName": "source.infs",
+                "path": "./syntaxes/infinite-script.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "infinite-script",
+                "path": "./snippets/infinite-script.json"
+            }
+        ],
+        "commands": [
+            {
+                "command": "infiniteScript.run",
+                "title": "InfiniteScript: Run File",
+                "icon": "$(play)"
+            },
+            {
+                "command": "infiniteScript.check",
+                "title": "InfiniteScript: Check File",
+                "icon": "$(check)"
+            },
+            {
+                "command": "infiniteScript.build",
+                "title": "InfiniteScript: Build Project",
+                "icon": "$(tools)"
+            }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "infiniteScript.run",
+                    "when": "editorLangId == infinite-script",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "infiniteScript.check",
+                    "when": "editorLangId == infinite-script",
+                    "group": "navigation@2"
+                }
+            ]
+        }
+    }
+}

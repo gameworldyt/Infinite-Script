@@ -1,0 +1,16 @@
+/- InfiniteScript VS Code test
+
+Local Storage Money = 100
+
+Function GiveMoney Amount
+    Change Money by Amount
+    Return Money
+End
+
+GiveMoney 50
+
+If Money >= 150
+    Say "Extension works!"
+Else
+    Say "Something went wrong."
+End

@@ -1,0 +1,54 @@
+﻿{
+    "Say": {
+        "prefix": "say",
+        "body": [
+            "Say \"$1\""
+        ],
+        "description": "Print text"
+    },
+
+    "If": {
+        "prefix": "if",
+        "body": [
+            "If $1",
+            "    $2",
+            "End"
+        ],
+        "description": "If statement"
+    },
+
+    "Function": {
+        "prefix": "function",
+        "body": [
+            "Function $1 $2",
+            "    $3",
+            "End"
+        ],
+        "description": "InfiniteScript function"
+    },
+
+    "LocalStorage": {
+        "prefix": "storage",
+        "body": [
+            "Local Storage $1 = $2"
+        ],
+        "description": "Create local storage variable"
+    },
+
+    "UI": {
+        "prefix": "ui",
+        "body": [
+            "UI",
+            "    Window Main",
+            "        Title \"$1\"",
+            "        Size 800, 600",
+            "",
+            "        Button $2",
+            "            Text \"$3\"",
+            "        End",
+            "    End",
+            "End"
+        ],
+        "description": "Create an InfiniteScript UI"
+    }
+}

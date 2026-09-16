@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation — InfiniteScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/docs.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="../index.html" class="brand">
+        <span class="brand-symbol">8</span>
+        <span>InfiniteScript</span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="index.html">Docs</a>
+        <a href="../examples.html">Examples</a>
+        <a href="../download.html">Download</a>
+    </nav>
+
+    <a href="../terms/index.html" class="download-button">Terms</a>
+</header>
+
+
+<div class="docs-layout">
+
+    <aside class="docs-sidebar">
+
+        <div class="docs-version">
+            InfiniteScript
+            <span>v0.2</span>
+        </div>
+
+        <div class="docs-group">
+            <div class="docs-label">GETTING STARTED</div>
+            <a class="active" href="index.html">Introduction</a>
+            <a href="getting-started.html">Getting Started</a>
+            <a href="syntax.html">Syntax</a>
+        </div>
+
+        <div class="docs-group">
+            <div class="docs-label">LANGUAGE</div>
+            <a href="variables.html">Variables</a>
+            <a href="control-flow.html">Control Flow</a>
+            <a href="functions.html">Functions</a>
+            <a href="input.html">Input</a>
+            <a href="events.html">Events</a>
+            <a href="language/operators.html">Operators</a>
+        </div>
+
+        <div class="docs-group">
+            <div class="docs-label">STANDARD LIBRARY</div>
+            <a href="standard-library/index.html">Overview</a>
+            <a href="standard-library/math.html">Math</a>
+            <a href="standard-library/strings.html">Strings</a>
+            <a href="standard-library/files.html">Files</a>
+            <a href="standard-library/storage.html">Storage</a>
+            <a href="standard-library/random.html">Random</a>
+        </div>
+
+        <div class="docs-group">
+            <div class="docs-label">INFINITE UI</div>
+            <a href="infinite-ui/index.html">Overview</a>
+            <a href="infinite-ui/components.html">Components</a>
+            <a href="infinite-ui/animation.html">Animation</a>
+        </div>
+
+        <div class="docs-group">
+            <div class="docs-label">CLI</div>
+            <a href="cli/index.html">Command Line</a>
+        </div>
+
+    </aside>
+
+
+    <main class="docs-content">
+
+        <div class="docs-breadcrumb">
+            Documentation / Introduction
+        </div>
+
+        <h1>InfiniteScript Documentation</h1>
+
+        <p class="docs-lead">
+            Welcome to InfiniteScript — a programming language designed
+            to be simple to learn while remaining powerful underneath.
+        </p>
+
+
+        <div class="docs-callout">
+            <strong>Current version: v0.2</strong>
+            <p>
+                InfiniteScript is actively being developed. Some features
+                documented here may change as the language evolves.
+            </p>
+        </div>
+
+
+        <h2>What is InfiniteScript?</h2>
+
+        <p>
+            InfiniteScript is a readable programming language built around
+            clear commands, simple syntax, and a growing runtime.
+        </p>
+
+        <p>
+            Instead of requiring complicated syntax for basic operations,
+            InfiniteScript lets you express what you want your program
+            to do directly.
+        </p>
+
+
+        <h2>Your first program</h2>
+
+        <p>
+            Create a file ending in <code>.infs</code> and write:
+        </p>
+
+        <div class="docs-code">
+<pre><code><span class="kw">Say</span> <span class="str">"Hello, World!"</span></code></pre>
+        </div>
+
+        <p>
+            Run the program using the InfiniteScript CLI:
+        </p>
+
+        <div class="docs-code">
+<pre><code>Inf run Hello.infs</code></pre>
+        </div>
+
+
+        <h2>Variables</h2>
+
+        <p>
+            Variables can store numbers, text, and boolean values.
+        </p>
+
+        <div class="docs-code">
+<pre><code><span class="kw">Local Storage</span> Money = <span class="num">100</span>
+<span class="kw">Local Storage</span> PlayerName = <span class="str">"Adan"</span>
+<span class="kw">Local Storage</span> IsAdmin = <span class="bool">true</span></code></pre>
+        </div>
+
+
+        <h2>Changing values</h2>
+
+        <div class="docs-code">
+<pre><code><span class="kw">Change</span> Money by <span class="num">50</span>
+
+<span class="kw">Set</span> Money = <span class="num">500</span></code></pre>
+        </div>
+
+
+        <h2>Conditions</h2>
+
+        <p>
+            Use <code>If</code>, <code>Else If</code>, <code>Else</code>,
+            and <code>End</code> to control program flow.
+        </p>
+
+        <div class="docs-code">
+<pre><code><span class="kw">If</span> Money &gt;= <span class="num">100</span>
+    <span class="kw">Say</span> <span class="str">"You have enough money."</span>
+<span class="kw">Else</span>
+    <span class="kw">Say</span> <span class="str">"Not enough money."</span>
+<span class="kw">End</span></code></pre>
+        </div>
+
+
+        <h2>Functions</h2>
+
+        <p>
+            Functions let you package reusable behaviour.
+        </p>
+
+        <div class="docs-code">
+<pre><code><span class="kw">Function</span> GiveMoney Amount
+    <span class="kw">Change</span> Money by Amount
+    <span class="kw">Return</span> Money
+<span class="kw">End</span>
+
+GiveMoney <span class="num">50</span></code></pre>
+        </div>
+
+
+        <h2>Where to go next</h2>
+
+        <div class="docs-next-grid">
+
+            <a href="getting-started.html" class="docs-next">
+                <span>01</span>
+                <strong>Getting Started</strong>
+                <small>Install and run InfiniteScript.</small>
+            </a>
+
+            <a href="syntax.html" class="docs-next">
+                <span>02</span>
+                <strong>Syntax</strong>
+                <small>Learn how InfiniteScript programs are structured.</small>
+            </a>
+
+            <a href="variables.html" class="docs-next">
+                <span>03</span>
+                <strong>Variables</strong>
+                <small>Store and manipulate data.</small>
+            </a>
+
+            <a href="infinite-ui/index.html" class="docs-next">
+                <span>04</span>
+                <strong>Infinite UI</strong>
+                <small>Explore the UI and animation system.</small>
+            </a>
+
+        </div>
+
+
+        <div class="docs-footer-nav">
+            <a href="../index.html">? Home</a>
+            <a href="getting-started.html">Getting Started ?</a>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

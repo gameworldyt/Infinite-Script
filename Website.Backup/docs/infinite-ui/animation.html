@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Engine | InfiniteScript</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/docs.css">
+
+    <style>
+        .animation-demo {
+            margin: 28px 0;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 18px;
+            background: rgba(255,255,255,.035);
+        }
+
+        .demo-stage {
+            position: relative;
+            height: 180px;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 14px;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(120,90,255,.18), transparent 30%),
+                rgba(0,0,0,.2);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .demo-box {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            left: 30px;
+            top: 58px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #8b5cf6, #38bdf8);
+            box-shadow: 0 12px 40px rgba(56,189,248,.25);
+        }
+
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .demo-controls button {
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.06);
+            color: white;
+            padding: 9px 14px;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .demo-controls button:hover {
+            background: rgba(255,255,255,.12);
+        }
+
+        .demo-label {
+            color: #9ca3af;
+            font-size: .9rem;
+        }
+
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .capability {
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.025);
+        }
+
+        .capability strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container nav-container">
+        <a class="brand" href="../../index.html">8 InfiniteScript</a>
+
+        <nav class="nav-links">
+            <a href="../../index.html">Home</a>
+            <a href="../index.html">Docs</a>
+            <a href="../../learn/index.html">Learn</a>
+            <a href="../../examples.html">Examples</a>
+            <a href="../../download/index.html">Download</a>
+        </nav>
+    </div>
+</header>
+
+<main class="docs-layout">
+
+    <aside class="docs-sidebar">
+        <div class="docs-sidebar-title">Infinite UI</div>
+
+        <a href="index.html">Overview</a>
+        <a href="components.html">Components</a>
+        <a class="active" href="animation.html">Animation</a>
+    </aside>
+
+    <article class="docs-content">
+
+        <div class="eyebrow">InfiniteScript Engine</div>
+
+        <h1>Animation Engine</h1>
+
+        <p class="lead">
+            InfiniteScript includes a dedicated animation system designed for
+            smooth transitions, reusable tracks, easing, sequences, groups,
+            repetition and physics-based motion.
+        </p>
+
+        <div class="callout">
+            <strong>Browser demonstration</strong><br>
+            The demonstrations below run in your browser so you can explore
+            the concepts interactively. The production InfiniteScript
+            animation engine is implemented in C++.
+        </div>
+
+        <h2>Interactive playground</h2>
+
+        <div class="animation-demo">
+
+            <div class="demo-label">
+                AnimationTrack • interpolation • easing
+            </div>
+
+            <div class="demo-stage">
+                <div id="box" class="demo-box"></div>
+            </div>
+
+            <div class="demo-controls">
+                <button onclick="play('linear')">Linear</button>
+                <button onclick="play('ease')">Ease In/Out</button>
+                <button onclick="play('bounce')">Bounce</button>
+                <button onclick="play('elastic')">Elastic</button>
+                <button onclick="play('back')">Back</button>
+                <button onclick="resetBox()">Reset</button>
+            </div>
+
+        </div>
+
+        <h2>Animation capabilities</h2>
+
+        <div class="capability-grid">
+
+            <div class="capability">
+                <strong>?? Interpolation</strong>
+                <span>Animate numeric values and structured properties.</span>
+            </div>
+
+            <div class="capability">
+                <strong>?? Easing</strong>
+                <span>Linear, cubic, quartic, quintic, exponential, circular,
+                back, elastic and bounce easing.</span>
+            </div>
+
+            <div class="capability">
+                <strong>??? Keyframes</strong>
+                <span>Create tracks containing multiple animation points.</span>
+            </div>
+
+            <div class="capability">
+                <strong>?? Sequences</strong>
+                <span>Run animations one after another.</span>
+            </div>
+
+            <div class="capability">
+                <strong>?? Groups</strong>
+                <span>Run multiple animations together.</span>
+            </div>
+
+            <div class="capability">
+                <strong>?? Repetition</strong>
+                <span>Support one-shot and repeating animation modes.</span>
+            </div>
+
+            <div class="capability">
+                <strong>?? Control</strong>
+                <span>Pause, resume, cancel, reset and reverse animations.</span>
+            </div>
+
+            <div class="capability">
+                <strong>?? Springs</strong>
+                <span>Physics-style spring motion is available in the engine.</span>
+            </div>
+
+        </div>
+
+        <h2>InfiniteScript example</h2>
+
+        <pre><code>UI
+    Window Main
+        Title "Animation Demo"
+        Size 800, 600
+
+        Button Start
+            Text "Animate"
+        End
+    End
+End</code></pre>
+
+        <p>
+            The UI language and animation engine are separate layers. This lets
+            the runtime handle animation while UI components remain simple for
+            InfiniteScript developers.
+        </p>
+
+        <div class="docs-next">
+            <a href="components.html">
+                <span>? Previous</span>
+                Components
+            </a>
+
+            <a href="../index.html">
+                <span>Back to</span>
+                Documentation ?
+            </a>
+        </div>
+
+    </article>
+</main>
+
+<script>
+const box = document.getElementById("box");
+let animationFrame = null;
+
+function easeLinear(t) {
+    return t;
+}
+
+function easeInOut(t) {
+    return t < 0.5
+        ? 2 * t * t
+        : 1 - Math.pow(-2 * t + 2, 2) / 2;
+}
+
+function easeBack(t) {
+    const c1 = 1.70158;
+    const c3 = c1 + 1;
+
+    return c3 * t * t * t - c1 * t * t;
+}
+
+function easeBounce(t) {
+    const n1 = 7.5625;
+    const d1 = 2.75;
+
+    if (t < 1 / d1)
+        return n1 * t * t;
+
+    if (t < 2 / d1) {
+        t -= 1.5 / d1;
+        return n1 * t * t + .75;
+    }
+
+    if (t < 2.5 / d1) {
+        t -= 2.25 / d1;
+        return n1 * t * t + .9375;
+    }
+
+    t -= 2.625 / d1;
+    return n1 * t * t + .984375;
+}
+
+function easeElastic(t) {
+    if (t === 0 || t === 1) return t;
+
+    const c4 = (2 * Math.PI) / 3;
+
+    return Math.pow(2, -10 * t) *
+        Math.sin((t * 10 - .75) * c4) + 1;
+}
+
+function play(type) {
+    cancelAnimationFrame(animationFrame);
+
+    const start = performance.now();
+    const duration = 1100;
+    const startX = 30;
+    const endX = 520;
+
+    function frame(now) {
+        let t = Math.min((now - start) / duration, 1);
+
+        let eased;
+
+        switch (type) {
+            case "ease":
+                eased = easeInOut(t);
+                break;
+
+            case "bounce":
+                eased = easeBounce(t);
+                break;
+
+            case "elastic":
+                eased = easeElastic(t);
+                break;
+
+            case "back":
+                eased = easeBack(t);
+                break;
+
+            default:
+                eased = easeLinear(t);
+        }
+
+        const x = startX + (endX - startX) * eased;
+        box.style.transform = "translateX(" + x + "px)";
+
+        if (t < 1) {
+            animationFrame = requestAnimationFrame(frame);
+        }
+    }
+
+    animationFrame = requestAnimationFrame(frame);
+}
+
+function resetBox() {
+    cancelAnimationFrame(animationFrame);
+    box.style.transform = "translateX(0)";
+}
+</script>
+
+</body>
+</html>

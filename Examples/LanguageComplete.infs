@@ -1,0 +1,22 @@
+Package LanguageComplete
+
+Local Storage Money = 100
+
+Function AddMoney Amount
+    Change Money by Amount
+    Return Money
+End
+
+For I = 1 to 5
+    AddMoney I
+End
+
+While Money < 120
+    Change Money by 1
+End
+
+If Money >= 120
+    Say "Complete!"
+Else
+    Say "Failed!"
+End

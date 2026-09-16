@@ -1,0 +1,11 @@
+/- Info syntax test
+
+Say "Hello World!"
+
+Local Storage Money = 100
+
+If Money > 50
+    Say "You have enough money!"
+Else
+    Say "You need more money."
+End

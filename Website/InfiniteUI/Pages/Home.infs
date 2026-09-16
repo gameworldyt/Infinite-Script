@@ -1,0 +1,21 @@
+﻿UI
+    Window Main
+        Title "InfiniteScript"
+
+        Text HeroTitle
+            Content "One language. Infinite possibilities."
+        End
+
+        Text HeroDescription
+            Content "Build applications, interfaces, animations and more with InfiniteScript."
+        End
+
+        Button GetStarted
+            Text "Get Started"
+
+            On Click
+                Say "Welcome to InfiniteScript!"
+            End
+        End
+    End
+End

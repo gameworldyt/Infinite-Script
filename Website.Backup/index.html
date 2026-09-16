@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>InfiniteScript â€” Simple to learn. Powerful underneath.</title>
+    <meta name="description" content="InfiniteScript is a modern programming language designed to be simple to learn and powerful underneath.">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <span class="brand-symbol">8</span>
+            <span>InfiniteScript</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#language">Language</a>
+            <a href="#features">Features</a>
+            <a href="#ui">Infinite UI</a>
+            <a href="docs/index.html">Docs</a>
+            <a href="examples.html">Examples</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="download/index.html" class="download-button">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                InfiniteScript v0.2
+            </div>
+
+            <h1>
+                Simple to learn.<br>
+                <span>Powerful underneath.</span>
+            </h1>
+
+            <p class="hero-description">
+                A modern programming language designed to make programming
+                readable, approachable, and powerful from the start.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="docs/index.html" class="primary-button">
+                    Start Learning
+                    <span>?</span>
+                </a>
+
+                <a href="examples.html" class="secondary-button">
+                    View Examples
+                </a>
+            </div>
+
+            <div class="code-window hero-code">
+
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <span class="window-title">Hello.infs</span>
+                </div>
+
+                <div class="code-content">
+<pre><code><span class="keyword">Local Storage</span> playerName = <span class="string">"Adan"</span>
+
+<span class="keyword">Say</span> <span class="string">"Hello, "</span> + playerName
+
+<span class="keyword">If</span> playerName == <span class="string">"Adan"</span>
+    <span class="keyword">Say</span> <span class="string">"Welcome back!"</span>
+<span class="keyword">End</span></code></pre>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LANGUAGE -->
+        <section id="language" class="section">
+
+            <div class="section-heading">
+                <span class="eyebrow">THE LANGUAGE</span>
+
+                <h2>
+                    Code that reads<br>
+                    <span>like code should.</span>
+                </h2>
+
+                <p>
+                    InfiniteScript removes unnecessary complexity without
+                    removing the power underneath.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+                    <div class="feature-icon">?</div>
+                    <h3>Readable syntax</h3>
+                    <p>
+                        Write programs using clear commands and structures
+                        that are easy to understand.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">?</div>
+                    <h3>Powerful runtime</h3>
+                    <p>
+                        Variables, functions, loops, events, packages,
+                        storage, math and more.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">?</div>
+                    <h3>Built to grow</h3>
+                    <p>
+                        InfiniteScript is designed to grow from a simple
+                        scripting language into a complete development platform.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- CODE -->
+        <section id="features" class="section split-section">
+
+            <div class="split-text">
+
+                <span class="eyebrow">LESS FRICTION</span>
+
+                <h2>
+                    Programming shouldn't
+                    <span>fight you.</span>
+                </h2>
+
+                <p>
+                    InfiniteScript focuses on making the common things
+                    straightforward while keeping the underlying system
+                    capable of handling much more advanced programs.
+                </p>
+
+                <a href="docs/index.html" class="text-link">
+                    Explore the language ?
+                </a>
+
+            </div>
+
+            <div class="code-window">
+
+                <div class="window-bar">
+                    <div class="window-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <span class="window-title">Game.infs</span>
+                </div>
+
+                <div class="code-content">
+<pre><code><span class="keyword">Local Storage</span> Money = <span class="number">100</span>
+<span class="keyword">Local Storage</span> IsAdmin = <span class="boolean">true</span>
+
+<span class="keyword">Function</span> GiveMoney Amount
+    <span class="keyword">Change</span> Money by Amount
+    <span class="keyword">Return</span> Money
+<span class="keyword">End</span>
+
+<span class="keyword">GiveMoney</span> <span class="number">50</span>
+
+<span class="keyword">If</span> Money &gt;= <span class="number">150</span> <span class="keyword">And</span> IsAdmin == <span class="boolean">true</span>
+    <span class="keyword">Say</span> <span class="string">"Access granted!"</span>
+<span class="keyword">End</span></code></pre>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INFINITE UI -->
+        <section id="ui" class="section ui-section">
+
+            <div class="section-heading centered">
+
+                <span class="eyebrow">INFINITE UI</span>
+
+                <h2>
+                    Build interfaces<br>
+                    <span>with Infinite.</span>
+                </h2>
+
+                <p>
+                    InfiniteScript is being built alongside Infinite UI â€”
+                    a UI system designed for creating applications with the
+                    same philosophy as the language.
+                </p>
+
+            </div>
+
+            <div class="ui-preview">
+
+                <div class="fake-window">
+
+                    <div class="fake-titlebar">
+                        <span>Infinite UI</span>
+
+                        <div>
+                            <span class="mini-dot"></span>
+                            <span class="mini-dot"></span>
+                            <span class="mini-dot"></span>
+                        </div>
+                    </div>
+
+                    <div class="fake-content">
+
+                        <aside>
+                            <div class="side-logo">8</div>
+
+                            <div class="side-item active">Dashboard</div>
+                            <div class="side-item">Projects</div>
+                            <div class="side-item">Settings</div>
+                        </aside>
+
+                        <div class="dashboard">
+
+                            <span class="small-label">WELCOME</span>
+
+                            <h3>Your workspace.</h3>
+
+                            <div class="dashboard-cards">
+                                <div>
+                                    <strong>24</strong>
+                                    <span>Projects</span>
+                                </div>
+
+                                <div>
+                                    <strong>8</strong>
+                                    <span>Components</span>
+                                </div>
+
+                                <div>
+                                    <strong>8</strong>
+                                    <span>Possibilities</span>
+                                </div>
+                            </div>
+
+                            <button>Open Project ?</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="built-with">
+                <span>THIS WEBSITE IS</span>
+                <strong>Built with Infinite UI</strong>
+            </div>
+
+        </section>
+
+
+        <!-- CTA -->
+        <section class="cta-section">
+
+            <div class="cta-card">
+
+                <span class="eyebrow">READY?</span>
+
+                <h2>
+                    Start building<br>
+                    <span>with InfiniteScript.</span>
+                </h2>
+
+                <p>
+                    Explore the language, experiment with examples,
+                    and see where InfiniteScript can take you.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="docs/index.html" class="primary-button">
+                        Read the Docs ?
+                    </a>
+
+                    <a href="download/index.html" class="secondary-button">
+                        Get InfiniteScript
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div class="brand footer-brand">
+                <span class="brand-symbol">8</span>
+                <span>InfiniteScript</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="docs/index.html">Documentation</a>
+                <a href="examples.html">Examples</a>
+                <a href="download/index.html">Download</a>
+                <a href="docs/infinite-ui/index.html">Infinite UI</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <span>Â© 2026 InfiniteScript</span>
+            <span>Simple to learn. Powerful underneath.</span>
+        </div>
+
+    </footer>
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>
+
+
+
+

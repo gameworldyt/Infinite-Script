@@ -1,0 +1,34 @@
+/- Info v1 test
+
+Local Storage Money = 100
+Local Storage Price = 25
+Local Storage Count = 1
+
+Set Total = Money + Price * 2
+
+Say "Total: {Total}"
+
+While Count <= 5
+    Say Count
+    Change Count by 1
+End
+
+Local Function GiveMoney
+    Change Money by 100
+End
+
+GiveMoney
+
+Say "Money: {Money}"
+
+UI
+    Window Main
+        Title "My Info App"
+        Size 800, 600
+
+        Button Test
+            Text "Click Me"
+            Say "Button clicked!"
+        End
+    End
+End
