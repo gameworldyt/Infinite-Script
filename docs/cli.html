@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLI Documentation — InfiniteScript</title>
+<meta name="description" content="InfiniteScript CLI documentation.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+background:#070914;color:#f5f7ff;line-height:1.7
+}
+a{color:inherit;text-decoration:none}
+body:before{
+content:"";position:fixed;inset:0;z-index:-2;
+background:
+radial-gradient(circle at 10% 0%,rgba(99,91,255,.16),transparent 35%),
+radial-gradient(circle at 90% 30%,rgba(0,184,255,.09),transparent 35%)
+}
+nav{
+height:72px;position:sticky;top:0;z-index:20;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 6%;background:rgba(7,9,20,.8);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,.07)
+}
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px}
+.logo-mark{
+width:36px;height:36px;display:grid;place-items:center;
+border-radius:10px;background:linear-gradient(135deg,#756cff,#4c43df);
+box-shadow:0 0 30px rgba(99,91,255,.3);font-size:22px
+}
+.nav{display:flex;gap:25px;color:#969db2;font-size:14px}
+.nav a:hover{color:white}
+
+.layout{
+max-width:1350px;margin:auto;display:grid;
+grid-template-columns:240px 1fr
+}
+.sidebar{
+position:sticky;top:72px;height:calc(100vh - 72px);
+padding:35px 20px;border-right:1px solid rgba(255,255,255,.07)
+}
+.side-title{
+font-size:10px;letter-spacing:1.5px;color:#646b7e;
+font-weight:800;margin:20px 10px 8px;text-transform:uppercase
+}
+.sidebar a{
+display:block;padding:7px 10px;border-radius:7px;
+font-size:13px;color:#858ca0
+}
+.sidebar a:hover{background:rgba(255,255,255,.04);color:white}
+
+main{max-width:900px;padding:65px 65px 110px}
+.crumb{font-size:12px;color:#62697d;margin-bottom:25px}
+h1{font-size:52px;line-height:1.05;letter-spacing:-2.5px;margin-bottom:18px}
+h2{font-size:31px;letter-spacing:-1px;margin:65px 0 14px}
+h3{font-size:19px;margin:35px 0 10px}
+p{color:#9299ad;margin-bottom:18px}
+code.inline{
+font-family:Consolas,"Cascadia Code",monospace;
+background:rgba(255,255,255,.06);padding:3px 6px;
+border-radius:5px;color:#aaa4ff
+}
+.code{
+margin:22px 0;border:1px solid rgba(255,255,255,.08);
+border-radius:12px;overflow:hidden;background:#090b16
+}
+.code-head{
+height:40px;padding:0 14px;display:flex;align-items:center;
+border-bottom:1px solid rgba(255,255,255,.06);
+font-size:11px;color:#676e82
+}
+pre{
+padding:21px;overflow-x:auto;
+font-family:Consolas,"Cascadia Code",monospace;
+font-size:13px;line-height:1.8;color:#d7d9e5
+}
+.cmd{color:#72c8ff}
+.arg{color:#a7e6a1}
+.comment{color:#62697b}
+.warning{
+margin:28px 0;padding:19px 21px;border-radius:12px;
+border:1px solid rgba(251,191,36,.2);
+background:rgba(251,191,36,.05)
+}
+.warning strong{color:#fcd34d}
+.grid{
+display:grid;grid-template-columns:repeat(2,1fr);
+gap:14px;margin-top:25px
+}
+.card{
+padding:21px;border-radius:12px;
+border:1px solid rgba(255,255,255,.07);
+background:rgba(255,255,255,.025)
+}
+.card:hover{border-color:rgba(108,99,255,.3)}
+.card h3{margin:0 0 5px;font-size:16px}
+.card p{font-size:13px;margin:0;color:#858c9f}
+.badge{
+display:inline-block;padding:4px 7px;border-radius:5px;
+font-size:10px;background:rgba(108,99,255,.12);
+color:#aaa4ff;margin-left:6px
+}
+footer{
+border-top:1px solid rgba(255,255,255,.07);
+padding:30px 6%;color:#656b7e;font-size:12px
+}
+@media(max-width:850px){
+.layout{grid-template-columns:1fr}
+.sidebar{
+position:relative;top:0;height:auto;
+border-right:0;border-bottom:1px solid rgba(255,255,255,.07)
+}
+.sidebar .side-title:not(:first-child),
+.sidebar a:not(:nth-child(-n+5)){display:none}
+main{padding:45px 22px}
+h1{font-size:40px}
+.grid{grid-template-columns:1fr}
+.nav a:not(:last-child){display:none}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a class="logo" href="index.html">
+<span class="logo-mark">∞</span>
+InfiniteScript
+</a>
+<div class="nav">
+<a href="index.html">Home</a>
+<a href="documentation.html">Docs</a>
+<a href="cli.html">CLI</a>
+<a href="https://github.com/gameworldyt/Infinite-Script" target="_blank">GitHub ↗</a>
+</div>
+</nav>
+
+<div class="layout">
+
+<aside class="sidebar">
+<div class="side-title">CLI</div>
+<a href="#overview">Overview</a>
+<a href="#help">help</a>
+<a href="#version">version</a>
+<a href="#run">run</a>
+<a href="#check">check</a>
+<a href="#build">build</a>
+<a href="#new">new</a>
+<a href="#init">init</a>
+<a href="#clean">clean</a>
+
+<div class="side-title">Project</div>
+<a href="#workflow">Typical Workflow</a>
+<a href="#errors">Errors</a>
+</aside>
+
+<main>
+
+<div class="crumb">Documentation / CLI</div>
+
+<h1>InfiniteScript CLI</h1>
+
+<p>
+The InfiniteScript CLI is the command-line interface for creating,
+checking, building and running InfiniteScript projects.
+</p>
+
+<div class="warning">
+<strong>Current implementation</strong>
+<p style="margin:5px 0 0">
+The commands marked as implemented correspond to the current
+InfiniteScript CLI. Other commands are part of the planned CLI
+architecture and will become available as their runtime features
+are implemented.
+</p>
+</div>
+
+<h2 id="overview">Overview</h2>
+
+<p>
+The CLI is accessed through <code class="inline">Inf.exe</code>.
+</p>
+
+<div class="code">
+<div class="code-head">Command</div>
+<pre>Inf.exe &lt;command&gt; [arguments]</pre>
+</div>
+
+<h2 id="help">inf help <span class="badge">Implemented</span></h2>
+
+<p>
+Displays available CLI commands and usage information.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe help</pre>
+</div>
+
+<h2 id="version">inf version <span class="badge">Implemented</span></h2>
+
+<p>
+Displays the installed InfiniteScript version.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe version</pre>
+</div>
+
+<h2 id="run">inf run <span class="badge">Implemented</span></h2>
+
+<p>
+Runs an InfiniteScript source file.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe run Examples\Hello.infs</pre>
+</div>
+
+<p>
+If the program contains Infinite UI, the native UI runtime is started
+instead of a web renderer.
+</p>
+
+<h2 id="check">inf check <span class="badge">Implemented</span></h2>
+
+<p>
+Checks an InfiniteScript file by lexing, parsing and analysing it
+without executing the program.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe check Examples\Hello.infs</pre>
+</div>
+
+<h2 id="build">inf build <span class="badge">Implemented</span></h2>
+
+<p>
+Builds and validates an InfiniteScript source file.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe build Examples\Hello.infs</pre>
+</div>
+
+<h2 id="new">inf new <span class="badge">Implemented</span></h2>
+
+<p>
+Creates a new InfiniteScript project.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe new MyProject</pre>
+</div>
+
+<h2 id="init">inf init <span class="badge">Implemented</span></h2>
+
+<p>
+Initialises an InfiniteScript project in the current directory.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe init</pre>
+</div>
+
+<h2 id="clean">inf clean <span class="badge">Implemented</span></h2>
+
+<p>
+Cleans generated project files.
+</p>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre>Inf.exe clean</pre>
+</div>
+
+<h2 id="workflow">Typical Workflow</h2>
+
+<div class="code">
+<div class="code-head">Windows Terminal</div>
+<pre><span class="comment"># Create a project</span>
+Inf.exe new MyProject
+
+<span class="comment"># Check your code</span>
+Inf.exe check main.infs
+
+<span class="comment"># Build it</span>
+Inf.exe build main.infs
+
+<span class="comment"># Run it</span>
+Inf.exe run main.infs</pre>
+</div>
+
+<h2>Planned CLI Architecture</h2>
+
+<p>
+As InfiniteScript grows, the CLI will provide commands for packages,
+documentation, formatting, testing and project management.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h3>package</h3>
+<p>Install, remove, update and inspect InfiniteScript packages.</p>
+</div>
+
+<div class="card">
+<h3>test</h3>
+<p>Run project and language test suites.</p>
+</div>
+
+<div class="card">
+<h3>format</h3>
+<p>Automatically format InfiniteScript source code.</p>
+</div>
+
+<div class="card">
+<h3>docs</h3>
+<p>Generate documentation from an InfiniteScript project.</p>
+</div>
+
+<div class="card">
+<h3>run --watch</h3>
+<p>Automatically restart a development program after changes.</p>
+</div>
+
+<div class="card">
+<h3>build --release</h3>
+<p>Create an optimised release build.</p>
+</div>
+
+<div class="card">
+<h3>inspect</h3>
+<p>Inspect tokens, AST structures and runtime information.</p>
+</div>
+
+<div class="card">
+<h3>repl</h3>
+<p>Open an interactive InfiniteScript command environment.</p>
+</div>
+
+</div>
+
+<h2>Complete Command Reference</h2>
+
+<div class="code">
+<div class="code-head">InfiniteScript CLI</div>
+<pre>
+Inf help
+Inf version
+
+Inf run &lt;file&gt;
+Inf check &lt;file&gt;
+Inf build &lt;file&gt;
+
+Inf new &lt;project&gt;
+Inf init
+Inf clean
+
+Inf test
+Inf format
+Inf repl
+Inf debug &lt;file&gt;
+Inf inspect &lt;file&gt;
+Inf profile &lt;file&gt;
+Inf docs
+
+Inf package install &lt;package&gt;
+Inf package remove &lt;package&gt;
+Inf package update
+Inf package list
+Inf package search &lt;query&gt;
+Inf package info &lt;package&gt;
+
+Inf run &lt;file&gt; --watch
+Inf build &lt;file&gt; --debug
+Inf build &lt;file&gt; --release
+</pre>
+</div>
+<h2 id="errors">CLI Errors</h2>
+
+<p>
+InfiniteScript reports structured errors using the INF error code system.
+</p>
+
+<div class="code">
+<div class="code-head">Example</div>
+<pre>Error [INF1001]
+File: Examples\Hello.infs
+Line: 3
+"Sya" is not recognised.
+
+Did you mean:
+    Say</pre>
+</div>
+
+<p>
+Error ranges are grouped by subsystem, making compiler and runtime
+problems easier to identify.
+</p>
+
+<div class="grid">
+
+<div class="card"><h3>INF1000–1099</h3><p>Syntax errors</p></div>
+<div class="card"><h3>INF1100–1199</h3><p>Commands</p></div>
+<div class="card"><h3>INF1200–1299</h3><p>Variables and types</p></div>
+<div class="card"><h3>INF1300–1399</h3><p>Functions</p></div>
+<div class="card"><h3>INF1400–1499</h3><p>Infinite UI</p></div>
+<div class="card"><h3>INF1500–1599</h3><p>Backend</p></div>
+<div class="card"><h3>INF1600–1699</h3><p>Files and storage</p></div>
+<div class="card"><h3>INF1700–1799</h3><p>Events</p></div>
+<div class="card"><h3>INF1800–1899</h3><p>Security</p></div>
+<div class="card"><h3>INF2000–2099</h3><p>Runtime</p></div>
+<div class="card"><h3>INF9000–9099</h3><p>Internal errors</p></div>
+
+</div>
+
+</main>
+</div>
+
+<footer>
+∞ InfiniteScript · CLI Documentation · Web Preview
+</footer>
+
+</body>
+</html>
+

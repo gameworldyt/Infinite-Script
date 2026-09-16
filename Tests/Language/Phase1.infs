@@ -1,0 +1,20 @@
+﻿Value Name = "Adan"
+Value Score = 100
+
+If Score >= 50
+    Say "Passed"
+Else
+    Say "Failed"
+End
+
+List Players
+Add Players "Adan"
+Add Players "Alex"
+
+For Each Player In Players
+    Say Player
+End
+
+Repeat 3
+    Say "Hello"
+End

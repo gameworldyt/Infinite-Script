@@ -1,0 +1,647 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070914">
+<title>Documentation — InfiniteScript</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:#070914;color:#f5f7ff;line-height:1.7
+}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(108,99,255,.35)}
+
+.background{position:fixed;inset:0;pointer-events:none;z-index:-2;overflow:hidden}
+.glow{position:absolute;width:600px;height:600px;border-radius:50%;filter:blur(110px);opacity:.13}
+.glow.one{background:#635bff;top:-300px;left:-250px}
+.glow.two{background:#00b8ff;right:-300px;top:35%}
+.grid{
+position:absolute;inset:0;
+background-image:
+linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+background-size:50px 50px;
+mask-image:linear-gradient(to bottom,black,transparent 90%)
+}
+
+nav{
+height:72px;position:sticky;top:0;z-index:100;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 5%;
+background:rgba(7,9,20,.78);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,.07)
+}
+
+.logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px}
+.logo-mark{
+width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+background:linear-gradient(135deg,#756cff,#4c43df);
+box-shadow:0 0 30px rgba(99,91,255,.3);font-size:22px
+}
+.nav-links{display:flex;gap:28px;color:#9da4ba;font-size:14px}
+.nav-links a:hover{color:white}
+.nav-button{
+padding:8px 14px;border:1px solid rgba(255,255,255,.1);
+border-radius:9px;background:rgba(255,255,255,.04)
+}
+
+.layout{
+max-width:1400px;margin:auto;display:grid;
+grid-template-columns:245px minmax(0,1fr);
+min-height:calc(100vh - 72px)
+}
+
+.sidebar{
+position:sticky;top:72px;height:calc(100vh - 72px);
+overflow-y:auto;padding:35px 22px;
+border-right:1px solid rgba(255,255,255,.07)
+}
+
+.sidebar-section{margin-bottom:28px}
+.sidebar-title{
+font-size:10px;font-weight:800;letter-spacing:1.7px;
+color:#62697d;text-transform:uppercase;margin-bottom:9px
+}
+.sidebar a{
+display:block;padding:7px 10px;border-radius:7px;
+color:#858ca1;font-size:13px;transition:.2s
+}
+.sidebar a:hover{
+color:white;background:rgba(255,255,255,.04)
+}
+.sidebar a.active{
+color:white;background:rgba(108,99,255,.12)
+}
+
+.content{
+max-width:900px;width:100%;padding:65px 65px 120px
+}
+
+.breadcrumb{
+font-size:12px;color:#62697d;margin-bottom:25px
+}
+.breadcrumb span{color:#969db2}
+
+h1{
+font-size:52px;line-height:1.05;letter-spacing:-2.5px;margin-bottom:20px
+}
+h2{
+font-size:31px;letter-spacing:-1px;margin:70px 0 15px;
+padding-top:20px
+}
+h3{
+font-size:20px;margin:38px 0 10px
+}
+p{color:#9299ad;margin-bottom:18px}
+strong{color:#dfe3ef}
+
+.notice{
+padding:18px 20px;margin:30px 0;
+border-radius:12px;
+border:1px solid rgba(108,99,255,.22);
+background:rgba(108,99,255,.055)
+}
+.notice strong{color:#aaa4ff}
+
+.warning{
+padding:18px 20px;margin:30px 0;
+border-radius:12px;
+border:1px solid rgba(251,191,36,.2);
+background:rgba(251,191,36,.05)
+}
+.warning strong{color:#fcd34d}
+
+.code{
+margin:23px 0;border:1px solid rgba(255,255,255,.08);
+border-radius:12px;overflow:hidden;background:#090b16
+}
+.code-head{
+height:40px;display:flex;align-items:center;
+padding:0 14px;gap:7px;border-bottom:1px solid rgba(255,255,255,.06);
+color:#676e82;font-size:11px
+}
+.dot{width:8px;height:8px;border-radius:50%;background:#414555}
+pre{
+padding:21px;overflow-x:auto;font-family:"Cascadia Code",Consolas,monospace;
+font-size:13px;line-height:1.8;color:#d7d9e5
+}
+.kw{color:#a28cff}
+.cmd{color:#72c8ff}
+.str{color:#a7e6a1}
+.num{color:#f4bd76}
+.comment{color:#62697b}
+
+.inline{
+font-family:"Cascadia Code",Consolas,monospace;
+font-size:.88em;padding:3px 6px;border-radius:5px;
+background:rgba(255,255,255,.06);color:#b9b4ff
+}
+
+.table-wrap{overflow-x:auto;margin:25px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{
+padding:12px 14px;text-align:left;
+border-bottom:1px solid rgba(255,255,255,.07)
+}
+th{color:#cbd0df;background:rgba(255,255,255,.025)}
+td{color:#858c9f}
+
+.next{
+margin-top:80px;padding-top:25px;
+border-top:1px solid rgba(255,255,255,.07);
+display:flex;justify-content:space-between;gap:15px
+}
+.next-card{
+border:1px solid rgba(255,255,255,.08);
+padding:15px 18px;border-radius:10px;
+min-width:180px
+}
+.next-card small{display:block;color:#62697d;font-size:10px}
+.next-card strong{font-size:13px}
+
+footer{
+border-top:1px solid rgba(255,255,255,.07);
+padding:30px 5%;color:#656b7e;font-size:12px;
+display:flex;justify-content:space-between
+}
+
+@media(max-width:850px){
+.nav-links a:not(.nav-button){display:none}
+.layout{grid-template-columns:1fr}
+.sidebar{
+position:relative;top:0;height:auto;
+border-right:0;border-bottom:1px solid rgba(255,255,255,.07);
+padding:20px
+}
+.sidebar-section{display:none}
+.sidebar-section:first-child{display:block;margin:0}
+.sidebar a{display:inline-block;margin-right:5px}
+.content{padding:45px 25px 90px}
+h1{font-size:40px}
+}
+
+@media(max-width:500px){
+nav{padding:0 18px}
+.nav-button{display:none}
+.content{padding-left:18px;padding-right:18px}
+h1{font-size:35px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+<div class="grid"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
+</div>
+
+<nav>
+<a href="index.html" class="logo">
+<span class="logo-mark">∞</span>
+InfiniteScript
+</a>
+
+<div class="nav-links">
+<a href="documentation.html">Docs</a>
+<a href="#tutorial">Tutorial</a>
+<a href="#examples">Examples</a>
+<a href="index.html#download">Download</a>
+<a class="nav-button" href="https://github.com/gameworldyt/Infinite-Script" target="_blank">GitHub ↗</a>
+</div>
+</nav>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-section">
+<div class="sidebar-title">Getting Started</div>
+<a class="active" href="#introduction">Introduction</a>
+<a href="#installation">Installation</a>
+<a href="#first-program">Your First Program</a>
+<a href="#running">Running InfiniteScript</a>
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-title">Language</div>
+<a href="#syntax">Syntax</a>
+<a href="#comments">Comments</a>
+<a href="#variables">Variables</a>
+<a href="#types">Types</a>
+<a href="#expressions">Expressions</a>
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-title">Control Flow</div>
+<a href="#if">If Statements</a>
+<a href="#loops">Loops</a>
+<a href="#break">Break & Continue</a>
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-title">Functions</div>
+<a href="#functions">Functions</a>
+<a href="#parameters">Parameters</a>
+<a href="#return">Return Values</a>
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-title">Built-ins</div>
+<a href="#say">Say</a>
+<a href="#set">Set</a>
+<a href="#change">Change</a>
+<a href="#input">Input</a>
+<a href="#random">Random</a>
+<a href="#storage">Local Storage</a>
+</div>
+
+<div class="sidebar-section">
+<div class="sidebar-title">Infinite UI</div>
+<a href="#ui">UI</a>
+<a href="#window">Window</a>
+<a href="#title">Title</a>
+<a href="#size">Size</a>
+<a href="#text">Text</a>
+<a href="#button">Button</a>
+<a href="#events">Events</a>
+</div>
+
+</aside>
+
+<main class="content">
+
+<div class="breadcrumb">
+Documentation / <span>Getting Started</span>
+</div>
+
+<h1 id="introduction">InfiniteScript Documentation</h1>
+
+<p>
+Welcome to the InfiniteScript documentation.
+InfiniteScript is a readable programming language designed around
+a unified runtime and ecosystem.
+</p>
+
+<div class="notice">
+<strong>Current version: v0.2.0</strong>
+<p style="margin:5px 0 0">
+This documentation describes the current InfiniteScript architecture
+and implemented v0.2.0 language features.
+</p>
+</div>
+
+<h2 id="installation">Installation</h2>
+
+<p>
+InfiniteScript currently runs through the native
+<code class="inline">Inf.exe</code> runtime on Windows.
+</p>
+
+<p>
+After downloading the project, open a terminal in the project directory
+and run the InfiniteScript executable.
+</p>
+
+<div class="code">
+<div class="code-head">
+<span class="dot"></span><span class="dot"></span><span class="dot"></span>
+terminal
+</div>
+<pre>Inf.exe version</pre>
+</div>
+
+<h2 id="first-program">Your First Program</h2>
+
+<p>
+Create a file ending in <code class="inline">.infs</code>.
+For example, create <code class="inline">Hello.infs</code>.
+</p>
+
+<div class="code">
+<div class="code-head">Hello.infs</div>
+<pre><span class="comment">/- My first InfiniteScript program</span>
+
+<span class="cmd">Say</span> <span class="str">"Hello World!"</span></pre>
+</div>
+
+<p>
+The <code class="inline">Say</code> command writes text to the program output.
+</p>
+
+<h2 id="running">Running InfiniteScript</h2>
+
+<div class="code">
+<div class="code-head">terminal</div>
+<pre>Inf.exe run Hello.infs</pre>
+</div>
+
+<p>
+You can also validate a program without running it:
+</p>
+
+<div class="code">
+<div class="code-head">terminal</div>
+<pre>Inf.exe check Hello.infs</pre>
+</div>
+
+<h2 id="syntax">Syntax</h2>
+
+<p>
+InfiniteScript uses readable command-based syntax.
+Blocks are closed using <code class="inline">End</code>.
+</p>
+
+<div class="code">
+<div class="code-head">Example.infs</div>
+<pre><span class="kw">If</span> Money &gt; <span class="num">100</span>
+    <span class="cmd">Say</span> <span class="str">"Rich!"</span>
+<span class="kw">Else</span>
+    <span class="cmd">Say</span> <span class="str">"Keep working."</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="comments">Comments</h2>
+
+<p>
+Comments begin with <code class="inline">/-</code>.
+</p>
+
+<div class="code">
+<div class="code-head">Comments.infs</div>
+<pre><span class="comment">/- This is a comment</span>
+
+<span class="cmd">Say</span> <span class="str">"Hello"</span></pre>
+</div>
+
+<h2 id="variables">Variables</h2>
+
+<p>
+Variables can be created using Local Storage.
+</p>
+
+<div class="code">
+<div class="code-head">Variables.infs</div>
+<pre><span class="cmd">Local Storage</span> Money = <span class="num">100</span>
+<span class="cmd">Local Storage</span> PlayerName = <span class="str">"Adan"</span>
+<span class="cmd">Local Storage</span> IsAdmin = true</pre>
+</div>
+
+<h2 id="types">Types</h2>
+
+<div class="table-wrap">
+<table>
+<tr><th>Type</th><th>Example</th></tr>
+<tr><td>Number</td><td>100</td></tr>
+<tr><td>String</td><td>"Hello"</td></tr>
+<tr><td>Boolean</td><td>true / false</td></tr>
+</table>
+</div>
+
+<h2 id="expressions">Expressions</h2>
+
+<p>
+InfiniteScript supports arithmetic and comparisons.
+</p>
+
+<div class="code">
+<div class="code-head">Expressions.infs</div>
+<pre><span class="cmd">Set</span> Money = Money + <span class="num">50</span>
+
+<span class="kw">If</span> Money &gt;= <span class="num">100</span>
+    <span class="cmd">Say</span> <span class="str">"Enough."</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="if">If Statements</h2>
+
+<div class="code">
+<div class="code-head">Conditions.infs</div>
+<pre><span class="kw">If</span> Money &gt; <span class="num">100</span>
+    <span class="cmd">Say</span> <span class="str">"Over 100"</span>
+<span class="kw">Else If</span> Money == <span class="num">100</span>
+    <span class="cmd">Say</span> <span class="str">"Exactly 100"</span>
+<span class="kw">Else</span>
+    <span class="cmd">Say</span> <span class="str">"Under 100"</span>
+<span class="kw">End</span></pre>
+</div>
+
+<p>
+Logical conditions can use <code class="inline">And</code> and
+<code class="inline">Or</code>.
+</p>
+
+<h2 id="loops">Loops</h2>
+
+<p>
+InfiniteScript supports While and For blocks.
+</p>
+
+<div class="code">
+<div class="code-head">Loop.infs</div>
+<pre><span class="kw">While</span> Money &lt; <span class="num">500</span>
+    <span class="cmd">Change</span> Money by <span class="num">100</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="break">Break & Continue</h2>
+
+<p>
+Use <code class="inline">Break</code> to leave a loop and
+<code class="inline">Continue</code> to skip to the next iteration.
+</p>
+
+<h2 id="functions">Functions</h2>
+
+<p>
+Functions allow reusable blocks of code.
+</p>
+
+<div class="code">
+<div class="code-head">Functions.infs</div>
+<pre><span class="cmd">Local Function</span> GiveMoney
+    <span class="cmd">Change</span> Money by <span class="num">100</span>
+<span class="kw">End</span>
+
+GiveMoney</pre>
+</div>
+
+<h2 id="parameters">Parameters</h2>
+
+<div class="code">
+<div class="code-head">Parameters.infs</div>
+<pre><span class="cmd">Function</span> GiveMoney Amount
+    <span class="cmd">Change</span> Money by Amount
+<span class="kw">End</span>
+
+GiveMoney <span class="num">50</span></pre>
+</div>
+
+<h2 id="return">Return Values</h2>
+
+<div class="code">
+<div class="code-head">Return.infs</div>
+<pre><span class="cmd">Function</span> GiveMoney Amount
+    <span class="cmd">Change</span> Money by Amount
+    <span class="cmd">Return</span> Money
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="say">Say</h2>
+
+<div class="code">
+<div class="code-head">Say.infs</div>
+<pre><span class="cmd">Say</span> <span class="str">"Hello World"</span></pre>
+</div>
+
+<h2 id="set">Set</h2>
+
+<div class="code">
+<div class="code-head">Set.infs</div>
+<pre><span class="cmd">Set</span> Money = <span class="num">500</span></pre>
+</div>
+
+<h2 id="change">Change</h2>
+
+<div class="code">
+<div class="code-head">Change.infs</div>
+<pre><span class="cmd">Change</span> Money by <span class="num">100</span></pre>
+</div>
+
+<h2 id="input">Input</h2>
+
+<div class="code">
+<div class="code-head">Input.infs</div>
+<pre><span class="cmd">Input</span> PlayerName
+<span class="cmd">Input Number</span> Age
+<span class="cmd">Input Boolean</span> IsAdmin</pre>
+</div>
+
+<h2 id="random">Random</h2>
+
+<div class="code">
+<div class="code-head">Random.infs</div>
+<pre><span class="cmd">Random Number</span> Roll = <span class="num">1</span> to <span class="num">6</span></pre>
+</div>
+
+<h2 id="storage">Local Storage</h2>
+
+<div class="code">
+<div class="code-head">Storage.infs</div>
+<pre><span class="cmd">Local Storage</span> Money = <span class="num">100</span>
+<span class="cmd">Local Storage</span> PlayerName = <span class="str">"Adan"</span></pre>
+</div>
+
+<h2 id="ui">Infinite UI</h2>
+
+<p>
+Infinite UI allows InfiniteScript programs to describe native interfaces.
+The native runtime renders the interface directly on Windows.
+</p>
+
+<div class="code">
+<div class="code-head">Home.infs</div>
+<pre><span class="cmd">UI</span>
+    <span class="cmd">Window</span> Main
+        <span class="cmd">Title</span> <span class="str">"My App"</span>
+        <span class="cmd">Size</span> <span class="num">800</span>, <span class="num">600</span>
+    <span class="kw">End</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="window">Window</h2>
+
+<div class="code">
+<div class="code-head">Window.infs</div>
+<pre><span class="cmd">Window</span> Main
+    <span class="cmd">Title</span> <span class="str">"My Application"</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="title">Title</h2>
+
+<div class="code">
+<div class="code-head">Title.infs</div>
+<pre><span class="cmd">Title</span> <span class="str">"InfiniteScript"</span></pre>
+</div>
+
+<h2 id="size">Size</h2>
+
+<div class="code">
+<div class="code-head">Size.infs</div>
+<pre><span class="cmd">Size</span> <span class="num">800</span>, <span class="num">600</span></pre>
+</div>
+
+<h2 id="text">Text</h2>
+
+<div class="code">
+<div class="code-head">Text.infs</div>
+<pre><span class="cmd">Text</span> HeroTitle
+    <span class="cmd">Content</span> <span class="str">"Hello!"</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="button">Button</h2>
+
+<div class="code">
+<div class="code-head">Button.infs</div>
+<pre><span class="cmd">Button</span> GetStarted
+    <span class="cmd">Text</span> <span class="str">"Get Started"</span>
+<span class="kw">End</span></pre>
+</div>
+
+<h2 id="events">Events</h2>
+
+<p>
+UI events can be attached to elements.
+</p>
+
+<div class="code">
+<div class="code-head">Events.infs</div>
+<pre><span class="cmd">Button</span> GetStarted
+    <span class="cmd">Text</span> <span class="str">"Get Started"</span>
+
+    <span class="cmd">On Click</span>
+        <span class="cmd">Say</span> <span class="str">"Button clicked!"</span>
+    <span class="kw">End</span>
+<span class="kw">End</span></pre>
+</div>
+
+<div class="warning">
+<strong>⚠ Web Preview Notice</strong>
+<p style="margin:5px 0 0">
+This documentation website is hosted as static HTML.
+It does not execute Infinite UI. Native Infinite UI runs through
+<code class="inline">Inf.exe</code> on Windows.
+</p>
+</div>
+
+<div class="next">
+<a href="index.html" class="next-card">
+<small>← Previous</small>
+<strong>InfiniteScript Home</strong>
+</a>
+
+<a href="#installation" class="next-card" style="text-align:right">
+<small>Next →</small>
+<strong>Installation</strong>
+</a>
+</div>
+
+</main>
+</div>
+
+<footer>
+<div><strong>∞ InfiniteScript</strong> · Documentation</div>
+<div>Web Preview · Native UI runs through Inf.exe</div>
+</footer>
+
+</body>
+</html>
