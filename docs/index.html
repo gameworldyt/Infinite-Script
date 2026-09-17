@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070914">
-<meta name="description" content="InfiniteScript — One language. Infinite possibilities.">
-<title>InfiniteScript — Web Preview</title>
+
+<title>InfiniteScript — One Language. Infinite Possibilities.</title>
+
+<meta name="description"
+      content="InfiniteScript is a modern programming language for applications, interfaces, animation, backend systems and 3D experiences.">
 
 <style>
 * {
@@ -19,10 +21,9 @@ html {
 }
 
 body {
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #070914;
-    color: #f5f7ff;
-    line-height: 1.6;
+    font-family: "Segoe UI", Inter, Arial, sans-serif;
+    background: #02060d;
+    color: #e8f8ff;
     overflow-x: hidden;
 }
 
@@ -31,606 +32,1088 @@ a {
     text-decoration: none;
 }
 
-button {
-    font: inherit;
-}
-
-::selection {
-    background: rgba(108, 99, 255, .35);
-}
-
-/* Background */
+/* =========================
+   GLOBAL BACKGROUND
+========================= */
 
 .background {
     position: fixed;
     inset: 0;
-    pointer-events: none;
     overflow: hidden;
-    z-index: -2;
-}
-
-.glow {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: .16;
-    animation: float 12s ease-in-out infinite;
-}
-
-.glow.one {
-    background: #635bff;
-    top: -280px;
-    left: -180px;
-}
-
-.glow.two {
-    background: #00b8ff;
-    right: -250px;
-    top: 20%;
-    animation-delay: -4s;
-}
-
-.glow.three {
-    background: #a855f7;
-    left: 30%;
-    bottom: -400px;
-    animation-delay: -8s;
+    pointer-events: none;
+    z-index: -10;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(14,165,233,.14), transparent 30%),
+        radial-gradient(circle at 90% 60%, rgba(34,211,238,.08), transparent 28%),
+        #02060d;
 }
 
 .grid {
     position: absolute;
-    inset: 0;
+    width: 220%;
+    height: 220%;
+    left: -60%;
+    top: -35%;
+    opacity: .16;
+
     background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask-image: linear-gradient(to bottom, black, transparent 90%);
+        linear-gradient(rgba(56,189,248,.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,.22) 1px, transparent 1px);
+
+    background-size: 70px 70px;
+
+    transform:
+        perspective(700px)
+        rotateX(62deg);
+
+    animation: gridMove 18s linear infinite;
 }
 
-@keyframes float {
-    0%,100% { transform: translate(0,0) scale(1); }
-    50% { transform: translate(30px,40px) scale(1.08); }
+@keyframes gridMove {
+    from {
+        transform:
+            perspective(700px)
+            rotateX(62deg)
+            translateY(0);
+    }
+
+    to {
+        transform:
+            perspective(700px)
+            rotateX(62deg)
+            translateY(70px);
+    }
 }
 
-/* Navigation */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(4px);
+    animation: orbFloat 12s ease-in-out infinite;
+}
+
+.orb.one {
+    width: 420px;
+    height: 420px;
+    left: -180px;
+    top: 8%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(14,165,233,.18),
+            transparent 70%
+        );
+}
+
+.orb.two {
+    width: 520px;
+    height: 520px;
+    right: -230px;
+    top: 28%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(37,99,235,.15),
+            transparent 70%
+        );
+
+    animation-delay: -4s;
+}
+
+.orb.three {
+    width: 360px;
+    height: 360px;
+    left: 40%;
+    bottom: -180px;
+    background:
+        radial-gradient(
+            circle,
+            rgba(34,211,238,.13),
+            transparent 70%
+        );
+
+    animation-delay: -8s;
+}
+
+@keyframes orbFloat {
+    0%,100% {
+        transform: translate3d(0,0,0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(30px,-40px,0) scale(1.1);
+    }
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #67e8f9;
+
+    box-shadow:
+        0 0 12px #38bdf8,
+        0 0 25px rgba(56,189,248,.4);
+
+    animation:
+        particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+    from {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .7;
+    }
+
+    85% {
+        opacity: .7;
+    }
+
+    to {
+        transform: translateY(-20vh);
+        opacity: 0;
+    }
+}
+
+/* =========================
+   NAV
+========================= */
 
 nav {
     position: sticky;
     top: 0;
     z-index: 100;
-    height: 72px;
+
+    height: 74px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 0 7%;
-    background: rgba(7,9,20,.72);
+
+    border-bottom:
+        1px solid rgba(125,211,252,.08);
+
+    background:
+        rgba(2,6,13,.72);
+
     backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(255,255,255,.07);
 }
 
-.logo {
+.brand {
     display: flex;
     align-items: center;
     gap: 11px;
-    font-weight: 800;
+
     font-size: 19px;
-    letter-spacing: -.5px;
+    font-weight: 750;
 }
 
-.logo-mark {
-    width: 36px;
-    height: 36px;
+.logo {
+    width: 38px;
+    height: 38px;
+
     display: grid;
     place-items: center;
-    border-radius: 10px;
-    background: linear-gradient(135deg,#756cff,#4c43df);
-    box-shadow: 0 0 30px rgba(99,91,255,.35);
-    font-size: 22px;
+
+    border-radius: 11px;
+
+    font-size: 24px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0369a1,
+            #22d3ee
+        );
+
+    box-shadow:
+        0 0 25px rgba(34,211,238,.35);
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 30px;
-    color: #a9afc4;
+    gap: 26px;
+
+    color: #7891a2;
     font-size: 14px;
 }
 
 .nav-links a {
-    transition: color .2s ease;
+    transition: .25s ease;
 }
 
 .nav-links a:hover {
-    color: white;
+    color: #67e8f9;
+    transform: translateY(-1px);
 }
 
 .nav-button {
-    padding: 9px 15px;
+    padding: 10px 17px;
+
+    border:
+        1px solid rgba(56,189,248,.28);
+
     border-radius: 9px;
-    border: 1px solid rgba(255,255,255,.1);
-    background: rgba(255,255,255,.04);
+
+    color: #dffaff;
+
+    background:
+        rgba(14,165,233,.08);
 }
 
-/* Hero */
+/* =========================
+   HERO
+========================= */
 
 .hero {
-    min-height: calc(100vh - 72px);
+    min-height: calc(100vh - 74px);
+
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
     text-align: center;
-    padding: 100px 24px 130px;
-    position: relative;
+
+    padding: 100px 20px 120px;
+
+    perspective: 1200px;
 }
 
-.hero-content {
-    max-width: 950px;
+.hero-inner {
+    width: 100%;
+    max-width: 1100px;
+
+    animation:
+        heroIn 1s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform:
+            translateY(35px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
 }
 
 .badge {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 7px 12px;
-    border: 1px solid rgba(255,255,255,.1);
-    background: rgba(255,255,255,.045);
+    gap: 8px;
+
+    padding: 8px 14px;
+
+    border:
+        1px solid rgba(56,189,248,.2);
+
     border-radius: 999px;
-    color: #bfc5da;
+
+    background:
+        rgba(8,47,73,.35);
+
+    color: #7dd3fc;
+
     font-size: 13px;
+
     margin-bottom: 28px;
-    animation: fadeUp .8s ease both;
 }
 
 .badge-dot {
     width: 7px;
     height: 7px;
+
     border-radius: 50%;
-    background: #6ee7b7;
-    box-shadow: 0 0 12px #6ee7b7;
+
+    background: #22d3ee;
+
+    box-shadow:
+        0 0 13px #22d3ee;
+
+    animation: pulse 1.8s infinite;
 }
 
-.hero h1 {
-    font-size: clamp(54px, 8vw, 105px);
+@keyframes pulse {
+    0%,100% {
+        transform: scale(1);
+        opacity: .7;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+h1 {
+    font-size:
+        clamp(52px,8vw,94px);
+
     line-height: .98;
+
     letter-spacing: -5px;
-    font-weight: 850;
-    margin-bottom: 28px;
-    animation: fadeUp .8s .1s ease both;
+
+    font-weight: 800;
+
+    margin-bottom: 30px;
 }
 
 .gradient-text {
-    background: linear-gradient(90deg,#fff,#a8a4ff,#6c63ff,#8fdcff,#fff);
+    background:
+        linear-gradient(
+            100deg,
+            #e0faff,
+            #7dd3fc,
+            #22d3ee,
+            #60a5fa,
+            #e0faff
+        );
+
     background-size: 300% auto;
-    color: transparent;
+
     -webkit-background-clip: text;
     background-clip: text;
-    animation: gradient 7s linear infinite;
+
+    color: transparent;
+
+    animation:
+        gradientMove 7s linear infinite;
 }
 
-@keyframes gradient {
-    to { background-position: 300% center; }
+@keyframes gradientMove {
+    to {
+        background-position: 300% center;
+    }
 }
 
 .hero p {
-    max-width: 720px;
+    max-width: 750px;
     margin: auto;
-    color: #9ca3b8;
+
+    color: #8097a8;
+
     font-size: 19px;
-    animation: fadeUp .8s .2s ease both;
+    line-height: 1.75;
 }
 
-.hero-actions {
+.hero-buttons {
+    margin-top: 40px;
+
     display: flex;
     justify-content: center;
-    gap: 13px;
-    margin-top: 36px;
-    animation: fadeUp .8s .3s ease both;
+    gap: 14px;
+
+    flex-wrap: wrap;
 }
 
-.btn {
-    padding: 13px 21px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-}
-
-.btn-primary {
-    background: #6259ee;
-    box-shadow: 0 12px 35px rgba(98,89,238,.28);
-}
-
-.btn-primary:hover {
-    box-shadow: 0 16px 45px rgba(98,89,238,.4);
-}
-
-.btn-secondary {
-    background: rgba(255,255,255,.045);
-    border: 1px solid rgba(255,255,255,.1);
-}
-
-/* Notice */
-
-.preview-notice {
-    max-width: 1050px;
-    margin: -30px auto 110px;
-    padding: 22px 25px;
-    border: 1px solid rgba(251,191,36,.22);
-    background: rgba(251,191,36,.055);
-    border-radius: 15px;
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-}
-
-.notice-icon {
-    font-size: 21px;
-}
-
-.preview-notice strong {
-    color: #fcd34d;
-}
-
-.preview-notice p {
-    color: #aaa79b;
-    font-size: 14px;
-}
-
-/* Sections */
-
-section {
-    max-width: 1150px;
-    margin: 0 auto;
-    padding: 100px 25px;
-}
-
-.section-label {
-    color: #766eff;
-    font-weight: 800;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-}
-
-.section-title {
-    font-size: clamp(32px,5vw,53px);
-    letter-spacing: -2px;
-    line-height: 1.05;
-    margin-bottom: 15px;
-}
-
-.section-description {
-    color: #8f96aa;
-    max-width: 650px;
-}
-
-/* Feature cards */
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 17px;
-    margin-top: 45px;
-}
-
-.card {
-    padding: 27px;
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,.075);
-    background: rgba(255,255,255,.032);
-    transition: transform .25s ease, border-color .25s ease, background .25s ease;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(108,99,255,.35);
-    background: rgba(108,99,255,.055);
-}
-
-.card-icon {
-    width: 43px;
-    height: 43px;
-    display: grid;
-    place-items: center;
-    border-radius: 11px;
-    background: rgba(108,99,255,.13);
-    margin-bottom: 19px;
-    font-size: 20px;
-}
-
-.card h3 {
-    margin-bottom: 8px;
-    font-size: 18px;
-}
-
-.card p {
-    color: #898fa4;
-    font-size: 14px;
-}
-
-/* Code */
-
-.code-layout {
-    display: grid;
-    grid-template-columns: .85fr 1.15fr;
-    gap: 55px;
+.button {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+
+    padding: 14px 22px;
+
+    border-radius: 11px;
+
+    font-weight: 650;
+    font-size: 14px;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
 }
 
-.code-window {
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 15px;
+.button:hover {
+    transform: translateY(-4px);
+}
+
+.primary {
+    color: #001018;
+
+    background:
+        linear-gradient(
+            135deg,
+            #67e8f9,
+            #38bdf8
+        );
+
+    box-shadow:
+        0 12px 35px rgba(14,165,233,.2);
+}
+
+.primary:hover {
+    box-shadow:
+        0 18px 50px rgba(14,165,233,.35);
+}
+
+.secondary {
+    border:
+        1px solid rgba(125,211,252,.18);
+
+    background:
+        rgba(15,23,42,.6);
+
+    color: #c7eaf5;
+}
+
+.secondary:hover {
+    border-color:
+        rgba(103,232,249,.45);
+
+    background:
+        rgba(14,116,144,.1);
+}
+
+/* =========================
+   CODE WINDOW
+========================= */
+
+.code-wrap {
+    margin: 90px auto 0;
+
+    width: min(900px,94vw);
+
+    perspective: 1300px;
+}
+
+.code-card {
+    text-align: left;
+
+    border:
+        1px solid rgba(103,232,249,.13);
+
+    border-radius: 18px;
+
     overflow: hidden;
-    background: #090b16;
-    box-shadow: 0 30px 80px rgba(0,0,0,.3);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,25,42,.96),
+            rgba(2,8,18,.98)
+        );
+
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.55),
+        0 0 70px rgba(14,165,233,.08);
+
+    transform:
+        rotateX(8deg)
+        rotateY(-2deg);
+
+    transition:
+        transform .5s ease,
+        box-shadow .5s ease;
 }
 
-.code-top {
-    height: 43px;
+.code-card:hover {
+    transform:
+        rotateX(2deg)
+        rotateY(0deg)
+        translateY(-8px);
+
+    box-shadow:
+        0 45px 110px rgba(0,0,0,.65),
+        0 0 80px rgba(14,165,233,.15);
+}
+
+.code-header {
+    height: 48px;
+
     display: flex;
     align-items: center;
     gap: 7px;
-    padding: 0 15px;
-    background: rgba(255,255,255,.035);
-    border-bottom: 1px solid rgba(255,255,255,.06);
+
+    padding: 0 18px;
+
+    border-bottom:
+        1px solid rgba(125,211,252,.08);
+
+    background:
+        rgba(15,23,42,.65);
 }
 
-.dot {
+.window-dot {
     width: 9px;
     height: 9px;
+
     border-radius: 50%;
-    background: #45495a;
+
+    background: #294052;
 }
 
-.code-name {
+.code-title {
     margin-left: 8px;
-    color: #777e94;
+
+    color: #71899a;
+
     font-size: 12px;
 }
 
 pre {
-    padding: 25px;
+    padding: 28px;
+
     overflow-x: auto;
-    font-family: "Cascadia Code","JetBrains Mono",Consolas,monospace;
-    font-size: 13px;
-    line-height: 1.8;
-    color: #d7d9e5;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 14px;
+
+    line-height: 1.9;
+
+    color: #bdefff;
 }
 
-.kw { color: #9c8cff; }
-.cmd { color: #72c8ff; }
-.str { color: #a7e6a1; }
-.num { color: #f4bd76; }
-.comment { color: #5e6579; }
-
-/* Docs */
-
-.docs-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 16px;
-    margin-top: 40px;
+.keyword {
+    color: #67e8f9;
 }
 
-.doc {
-    padding: 23px;
-    border-radius: 13px;
-    border: 1px solid rgba(255,255,255,.07);
-    background: rgba(255,255,255,.025);
-    transition: .2s;
+.string {
+    color: #a5f3fc;
 }
 
-.doc:hover {
-    border-color: rgba(108,99,255,.3);
-    transform: translateY(-3px);
+.comment {
+    color: #496474;
 }
 
-.doc-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 7px;
-}
-
-.doc h3 {
-    font-size: 16px;
-}
-
-.doc span {
-    color: #656b7e;
-    font-size: 12px;
-}
-
-.doc p {
-    color: #858b9e;
-    font-size: 13px;
-}
-
-/* Stats */
+/* =========================
+   STATS
+========================= */
 
 .stats {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 15px;
-    margin-top: 45px;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    border-top:
+        1px solid rgba(125,211,252,.08);
+
+    border-bottom:
+        1px solid rgba(125,211,252,.08);
+
+    background:
+        rgba(4,14,26,.55);
 }
 
 .stat {
+    padding: 40px 20px;
+
     text-align: center;
-    padding: 27px 15px;
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 14px;
-    background: rgba(255,255,255,.025);
+
+    border-right:
+        1px solid rgba(125,211,252,.07);
+}
+
+.stat:last-child {
+    border-right: 0;
 }
 
 .stat strong {
     display: block;
-    font-size: 28px;
-    letter-spacing: -1px;
+
+    font-size: 29px;
+
+    color: #dffaff;
+
+    margin-bottom: 7px;
 }
 
 .stat span {
-    color: #777e92;
-    font-size: 12px;
-}
-
-/* Terminal */
-
-.terminal {
-    margin-top: 45px;
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 14px;
-    overflow: hidden;
-    background: #060810;
-}
-
-.terminal-head {
-    padding: 12px 16px;
-    color: #686f82;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    font-size: 12px;
-}
-
-.terminal-body {
-    padding: 25px;
-    font-family: "Cascadia Code",Consolas,monospace;
+    color: #607687;
     font-size: 13px;
-    color: #bbc0d0;
 }
 
-.prompt {
-    color: #7c72ff;
+/* =========================
+   SECTIONS
+========================= */
+
+section {
+    padding:
+        120px 7%;
+
+    position: relative;
 }
 
-.success {
-    color: #78dba1;
+.section-heading {
+    max-width: 760px;
+
+    margin-bottom: 55px;
 }
 
-/* CTA */
+.section-label {
+    color: #22d3ee;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 14px;
+}
+
+h2 {
+    font-size:
+        clamp(34px,5vw,56px);
+
+    letter-spacing: -2px;
+
+    margin-bottom: 18px;
+}
+
+.section-heading p {
+    color: #718696;
+
+    line-height: 1.75;
+
+    font-size: 16px;
+}
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 18px;
+}
+
+.card {
+    padding: 30px;
+
+    min-height: 230px;
+
+    border:
+        1px solid rgba(125,211,252,.09);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,25,42,.78),
+            rgba(3,10,20,.74)
+        );
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.card:hover {
+    transform:
+        translateY(-9px);
+
+    border-color:
+        rgba(56,189,248,.28);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.35);
+}
+
+.card-icon {
+    width: 45px;
+    height: 45px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    margin-bottom: 25px;
+
+    color: #67e8f9;
+
+    background:
+        rgba(14,165,233,.09);
+
+    border:
+        1px solid rgba(56,189,248,.12);
+
+    font-size: 20px;
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #687f90;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+}
+
+/* =========================
+   BIG SHOWCASE
+========================= */
+
+.showcase {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 55px;
+
+    align-items: center;
+}
+
+.showcase-text h2 {
+    margin-bottom: 20px;
+}
+
+.showcase-text p {
+    color: #718696;
+
+    line-height: 1.8;
+
+    margin-bottom: 28px;
+}
+
+.showcase-list {
+    display: grid;
+    gap: 13px;
+}
+
+.showcase-list div {
+    padding: 14px 17px;
+
+    border:
+        1px solid rgba(125,211,252,.08);
+
+    border-radius: 10px;
+
+    background:
+        rgba(7,20,34,.6);
+
+    color: #9cc9da;
+
+    transition: .25s ease;
+}
+
+.showcase-list div:hover {
+    transform: translateX(6px);
+
+    border-color:
+        rgba(56,189,248,.22);
+
+    color: #dffaff;
+}
+
+/* =========================
+   SHOWCASE CODE
+========================= */
+
+.mini-code {
+    border:
+        1px solid rgba(103,232,249,.12);
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    background:
+        #030b14;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.4);
+
+    transition: .4s ease;
+}
+
+.mini-code:hover {
+    transform:
+        translateY(-7px)
+        rotateY(-2deg);
+
+    box-shadow:
+        0 40px 90px rgba(0,0,0,.55);
+}
+
+.mini-code pre {
+    min-height: 330px;
+}
+
+/* =========================
+   ROADMAP
+========================= */
+
+.roadmap {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 18px;
+}
+
+.roadmap-item {
+    position: relative;
+
+    padding: 30px;
+
+    min-height: 250px;
+
+    border:
+        1px solid rgba(125,211,252,.08);
+
+    border-radius: 17px;
+
+    background:
+        rgba(5,16,29,.72);
+
+    overflow: hidden;
+}
+
+.roadmap-item::after {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -80px;
+    bottom: -80px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(34,211,238,.12),
+            transparent 70%
+        );
+}
+
+.roadmap-number {
+    color: #22d3ee;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+
+    margin-bottom: 22px;
+}
+
+.roadmap-item h3 {
+    font-size: 20px;
+
+    margin-bottom: 12px;
+}
+
+.roadmap-item p {
+    color: #687f90;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+}
+
+/* =========================
+   CTA
+========================= */
 
 .cta {
     text-align: center;
-    padding: 130px 25px;
 }
 
 .cta-box {
-    padding: 75px 30px;
-    border-radius: 23px;
-    border: 1px solid rgba(108,99,255,.2);
+    max-width: 1000px;
+
+    margin: auto;
+
+    padding: 90px 30px;
+
+    border:
+        1px solid rgba(56,189,248,.14);
+
+    border-radius: 25px;
+
     background:
-        radial-gradient(circle at 50% 0%,rgba(108,99,255,.16),transparent 50%),
-        rgba(255,255,255,.025);
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(14,165,233,.14),
+            transparent 45%
+        ),
+        rgba(5,15,28,.78);
+
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.4);
+
+    position: relative;
+
+    overflow: hidden;
 }
 
-.cta h2 {
-    font-size: clamp(34px,5vw,58px);
-    letter-spacing: -2px;
-    margin-bottom: 15px;
+.cta-box p {
+    color: #708696;
+
+    max-width: 650px;
+
+    margin:
+        0 auto 32px;
+
+    line-height: 1.7;
 }
 
-.cta p {
-    color: #858b9e;
-    margin-bottom: 30px;
-}
-
-/* Footer */
+/* =========================
+   FOOTER
+========================= */
 
 footer {
-    border-top: 1px solid rgba(255,255,255,.07);
-    padding: 35px 7%;
+    padding:
+        35px 7%;
+
+    border-top:
+        1px solid rgba(125,211,252,.07);
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
-    color: #656b7e;
-    font-size: 12px;
+
+    color: #506675;
+
+    font-size: 13px;
 }
 
-footer strong {
-    color: #aeb4c7;
+.footer-links {
+    display: flex;
+    gap: 20px;
 }
 
-/* Animation */
-
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.footer-links a:hover {
+    color: #67e8f9;
 }
+
+/* =========================
+   REVEAL
+========================= */
 
 .reveal {
     opacity: 0;
-    transform: translateY(25px);
-    transition: opacity .7s ease, transform .7s ease;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 }
 
 .reveal.visible {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+        translateY(0);
 }
 
-/* Mobile */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 850px) {
+
+    .nav-links {
+        gap: 12px;
+    }
+
     .nav-links a:not(.nav-button) {
         display: none;
     }
 
-    .features,
-    .stats {
-        grid-template-columns: repeat(2,1fr);
+    .cards,
+    .roadmap,
+    .showcase {
+        grid-template-columns: 1fr;
     }
 
-    .code-layout {
-        grid-template-columns: 1fr;
+    .stats {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stat:nth-child(2) {
+        border-right: 0;
+    }
+
+    .stat:nth-child(-n+2) {
+        border-bottom:
+            1px solid rgba(125,211,252,.07);
+    }
+
+    h1 {
+        letter-spacing: -3px;
     }
 }
 
-@media (max-width: 600px) {
-    nav {
-        padding: 0 20px;
-    }
-
-    .hero h1 {
-        letter-spacing: -3px;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        max-width: 260px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .features,
-    .docs-grid,
-    .stats {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 520px) {
 
     section {
-        padding: 75px 20px;
+        padding:
+            85px 6%;
     }
 
-    .preview-notice {
-        margin-left: 20px;
-        margin-right: 20px;
+    nav {
+        padding: 0 5%;
+    }
+
+    .hero {
+        padding-top: 75px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .code-card {
+        transform: none;
+    }
+
+    pre {
+        font-size: 12px;
+        padding: 20px;
     }
 
     footer {
         flex-direction: column;
-        gap: 10px;
+        gap: 18px;
         text-align: center;
     }
 }
@@ -639,30 +1122,84 @@ footer strong {
 
 <body>
 
+<!-- =========================
+     BACKGROUND
+========================= -->
+
 <div class="background">
+
     <div class="grid"></div>
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-    <div class="glow three"></div>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+    <div class="particle" style="left:5%;animation-duration:13s;"></div>
+    <div class="particle" style="left:14%;animation-duration:17s;animation-delay:-5s;"></div>
+    <div class="particle" style="left:26%;animation-duration:11s;animation-delay:-2s;"></div>
+    <div class="particle" style="left:39%;animation-duration:16s;animation-delay:-8s;"></div>
+    <div class="particle" style="left:51%;animation-duration:14s;animation-delay:-4s;"></div>
+    <div class="particle" style="left:64%;animation-duration:19s;animation-delay:-10s;"></div>
+    <div class="particle" style="left:76%;animation-duration:12s;animation-delay:-6s;"></div>
+    <div class="particle" style="left:89%;animation-duration:15s;animation-delay:-1s;"></div>
+    <div class="particle" style="left:96%;animation-duration:18s;animation-delay:-9s;"></div>
+
 </div>
 
+<!-- =========================
+     NAVIGATION
+========================= -->
+
 <nav>
-    <a href="#" class="logo">
-        <span class="logo-mark">∞</span>
+
+    <a href="index.html" class="brand">
+        <span class="logo">∞</span>
         InfiniteScript
     </a>
 
     <div class="nav-links">
-        <a href="#docs">Docs</a>
-        <a href="#tutorial">Tutorial</a>
-        <a href="#examples">Examples</a>
-        <a href="#download">Download</a>
-        <a class="nav-button" href="https://github.com/gameworldyt/Infinite-Script" target="_blank">GitHub ↗</a>
+
+        <a href="documentation.html">Docs</a>
+
+        <a href="documentation.html">
+            Language
+        </a>
+
+        <a href="cli.html">
+            CLI
+        </a>
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#roadmap">
+            Roadmap
+        </a>
+
+        <a
+            href="https://github.com/gameworldyt/Infinite-Script"
+            target="_blank">
+            GitHub
+        </a>
+
+        <a href="#download" class="nav-button">
+            Get Started
+        </a>
+
     </div>
+
 </nav>
 
-<header class="hero">
-    <div class="hero-content">
+<main>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-inner">
 
         <div class="badge">
             <span class="badge-dot"></span>
@@ -670,344 +1207,756 @@ footer strong {
         </div>
 
         <h1>
-            One language.<br>
-            <span class="gradient-text">Infinite possibilities.</span>
-        </h1>
 
-        <p>
-            A programming language designed to bring applications,
-            interfaces, automation, animation and more into one simple ecosystem.
-        </p>
-
-        <div class="hero-actions">
-            <a href="#tutorial" class="btn btn-primary">Get Started →</a>
-            <a href="#docs" class="btn btn-secondary">Explore Documentation</a>
-        </div>
-
-    </div>
-</header>
-
-<div class="preview-notice">
-    <div class="notice-icon">⚠</div>
-    <div>
-        <strong>Web Preview — not Infinite UI</strong>
-        <p>
-            This website is a static GitHub Pages preview of InfiniteScript.
-            GitHub Pages cannot execute the native InfiniteScript runtime,
-            so this page does not use Infinite UI. The full Infinite UI
-            experience runs natively through <code>Inf.exe</code> on Windows.
-        </p>
-    </div>
-</div>
-
-<section class="reveal">
-    <div class="section-label">Why InfiniteScript</div>
-    <h2 class="section-title">Designed to stay simple.</h2>
-    <p class="section-description">
-        InfiniteScript focuses on readable commands and a unified runtime,
-        allowing the language to grow from simple scripts into complete applications.
-    </p>
-
-    <div class="features">
-
-        <div class="card">
-            <div class="card-icon">⌘</div>
-            <h3>Readable Syntax</h3>
-            <p>
-                Write code that looks close to the way you describe what
-                your program should do.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">∞</div>
-            <h3>One Ecosystem</h3>
-            <p>
-                Language, runtime, UI, packages, storage and future systems
-                are designed to work together.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">⚡</div>
-            <h3>Built for Speed</h3>
-            <p>
-                A native runtime gives InfiniteScript a foundation for
-                responsive applications and interfaces.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">🎨</div>
-            <h3>Infinite UI</h3>
-            <p>
-                Build native interfaces directly from InfiniteScript without
-                needing HTML, CSS or JavaScript.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">◈</div>
-            <h3>Animation</h3>
-            <p>
-                Timelines, easing, interpolation and animation systems are
-                part of the engine architecture.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="card-icon">🔧</div>
-            <h3>Extensible</h3>
-            <p>
-                Packages, events and engine modules allow the platform to
-                expand without changing the language's core philosophy.
-            </p>
-        </div>
-
-    </div>
-</section>
-
-<section id="tutorial" class="reveal">
-
-    <div class="code-layout">
-
-        <div>
-            <div class="section-label">Quick Start</div>
-            <h2 class="section-title">Code that reads naturally.</h2>
-            <p class="section-description">
-                InfiniteScript is designed so beginners can understand what
-                code is doing without fighting complicated syntax.
-            </p>
-
-            <div style="margin-top:30px;">
-                <a href="#examples" class="btn btn-primary">View Examples →</a>
-            </div>
-        </div>
-
-        <div class="code-window">
-
-            <div class="code-top">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="code-name">Hello.infs</span>
-            </div>
-
-<pre><span class="comment">/- My first InfiniteScript program</span>
-
-<span class="cmd">Say</span> <span class="str">"Hello World!"</span>
-
-<span class="cmd">Local Storage</span> Money = <span class="num">100</span>
-
-<span class="kw">If</span> Money &gt; <span class="num">50</span>
-    <span class="cmd">Say</span> <span class="str">"You have enough money."</span>
-<span class="kw">Else</span>
-    <span class="cmd">Say</span> <span class="str">"You need more money."</span>
-<span class="kw">End</span></pre>
-
-        </div>
-
-    </div>
-
-</section>
-
-<section id="docs" class="reveal">
-
-    <div class="section-label">Documentation</div>
-    <h2 class="section-title">Everything in one place.</h2>
-    <p class="section-description">
-        Learn the language from your first command to building complete
-        native interfaces.
-    </p>
-
-    <div class="docs-grid">
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Introduction</h3>
-                <span>01</span>
-            </div>
-            <p>Understand the InfiniteScript philosophy and runtime.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Installation</h3>
-                <span>02</span>
-            </div>
-            <p>Install the InfiniteScript runtime and CLI on Windows.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Variables & Types</h3>
-                <span>03</span>
-            </div>
-            <p>Store numbers, strings, booleans and other values.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Conditions</h3>
-                <span>04</span>
-            </div>
-            <p>Build decisions with If, Else If, Else, And and Or.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Functions</h3>
-                <span>05</span>
-            </div>
-            <p>Create reusable logic with parameters and return values.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Infinite UI</h3>
-                <span>06</span>
-            </div>
-            <p>Build native Windows interfaces using InfiniteScript syntax.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Animation</h3>
-                <span>07</span>
-            </div>
-            <p>Create motion using timelines, easing and interpolation.</p>
-        </div>
-
-        <div class="doc">
-            <div class="doc-top">
-                <h3>Packages</h3>
-                <span>08</span>
-            </div>
-            <p>Extend projects through InfiniteScript's package system.</p>
-        </div>
-
-    </div>
-
-</section>
-
-<section id="examples" class="reveal">
-
-    <div class="section-label">Examples</div>
-    <h2 class="section-title">Start building.</h2>
-    <p class="section-description">
-        From tiny scripts to complete interfaces, InfiniteScript is designed
-        to scale with your project.
-    </p>
-
-    <div class="stats">
-
-        <div class="stat">
-            <strong>Say</strong>
-            <span>Output</span>
-        </div>
-
-        <div class="stat">
-            <strong>Set</strong>
-            <span>Variables</span>
-        </div>
-
-        <div class="stat">
-            <strong>If</strong>
-            <span>Logic</span>
-        </div>
-
-        <div class="stat">
-            <strong>UI</strong>
-            <span>Interfaces</span>
-        </div>
-
-    </div>
-
-    <div class="terminal">
-
-        <div class="terminal-head">
-            InfiniteScript CLI
-        </div>
-
-        <div class="terminal-body">
-            <div>
-                <span class="prompt">C:\InfiniteScript&gt;</span>
-                Inf.exe check Examples\Hello.infs
-            </div>
+            <span class="gradient-text">
+                One Language.
+            </span>
 
             <br>
 
-            <div class="success">
-                Checked Examples\Hello.infs successfully.
+            Infinite Possibilities.
+
+        </h1>
+
+        <p>
+            Build applications, interfaces, automation,
+            animation and future 3D experiences with one
+            readable programming language.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                href="documentation.html"
+                class="button primary">
+                Start Learning →
+            </a>
+
+            <a
+                href="#features"
+                class="button secondary">
+                Explore InfiniteScript
+            </a>
+
+        </div>
+
+        <div class="code-wrap">
+
+            <div class="code-card">
+
+                <div class="code-header">
+
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+                    <span class="window-dot"></span>
+
+                    <span class="code-title">
+                        Hello.infs
+                    </span>
+
+                </div>
+
+<pre><span class="comment">/- Your first InfiniteScript program</span>
+
+<span class="keyword">Say</span> <span class="string">"Hello, Infinite World!"</span>
+
+<span class="keyword">Local Storage</span> PlayerName = <span class="string">"Adan"</span>
+
+<span class="keyword">If</span> PlayerName == <span class="string">"Adan"</span>
+    <span class="keyword">Say</span> <span class="string">"Welcome back!"</span>
+<span class="keyword">End</span></pre>
+
             </div>
 
-            <div>
-                Tokens: 12
-            </div>
-
-            <div class="success">
-                Build succeeded.
-            </div>
         </div>
 
     </div>
 
 </section>
 
-<section id="download" class="cta reveal">
+<!-- =========================
+     STATS
+========================= -->
+
+<div class="stats reveal">
+
+    <div class="stat">
+        <strong>∞</strong>
+        <span>Designed to grow</span>
+    </div>
+
+    <div class="stat">
+        <strong>Native</strong>
+        <span>Windows runtime</span>
+    </div>
+
+    <div class="stat">
+        <strong>.infs</strong>
+        <span>Language file format</span>
+    </div>
+
+    <div class="stat">
+        <strong>1</strong>
+        <span>Unified language</span>
+    </div>
+
+</div>
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section id="features" class="reveal">
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            The Language
+        </div>
+
+        <h2>
+            Everything starts with simple code.
+        </h2>
+
+        <p>
+            InfiniteScript is being designed to combine
+            everyday programming features with a unified
+            runtime for UI, animation, backend systems
+            and more.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⌘
+            </div>
+
+            <h3>
+                Variables & Values
+            </h3>
+
+            <p>
+                Store numbers, text, true/false values
+                and reusable information using readable
+                syntax.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ƒ
+            </div>
+
+            <h3>
+                Functions
+            </h3>
+
+            <p>
+                Create reusable pieces of code with
+                simple inputs and return values.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ↻
+            </div>
+
+            <h3>
+                Control Flow
+            </h3>
+
+            <p>
+                Build logic with If, Else, While and
+                For without unnecessary syntax.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ▣
+            </div>
+
+            <h3>
+                Infinite UI
+            </h3>
+
+            <p>
+                Define native application interfaces
+                directly inside your InfiniteScript files.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ✦
+            </div>
+
+            <h3>
+                Animation
+            </h3>
+
+            <p>
+                Build smooth motion with timelines,
+                easing, interpolation and springs.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ◈
+            </div>
+
+            <h3>
+                Backend
+            </h3>
+
+            <p>
+                The architecture is being designed to
+                support APIs, routes and application logic.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     INFINITE UI
+========================= -->
+
+<section class="reveal">
+
+    <div class="showcase">
+
+        <div class="showcase-text">
+
+            <div class="section-label">
+                Infinite UI
+            </div>
+
+            <h2>
+                Build native interfaces with code.
+            </h2>
+
+            <p>
+                Infinite UI brings interface definitions
+                directly into the language. No HTML,
+                CSS, JavaScript or browser runtime is
+                required for the native Windows experience.
+            </p>
+
+            <div class="showcase-list">
+
+                <div>
+                    ▣ Windows
+                </div>
+
+                <div>
+                    T Text
+                </div>
+
+                <div>
+                    ◉ Buttons & Events
+                </div>
+
+                <div>
+                    ✦ Animation-ready components
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mini-code">
+
+<pre><span class="keyword">UI</span>
+    <span class="keyword">Window</span> Main
+
+        <span class="keyword">Title</span> <span class="string">"My App"</span>
+
+        <span class="keyword">Text</span> Welcome
+            <span class="keyword">Content</span> <span class="string">"Hello!"</span>
+        <span class="keyword">End</span>
+
+        <span class="keyword">Button</span> Start
+            <span class="keyword">Text</span> <span class="string">"Get Started"</span>
+
+            <span class="keyword">On Click</span>
+                <span class="keyword">Say</span> <span class="string">"Welcome!"</span>
+            <span class="keyword">End</span>
+
+        <span class="keyword">End</span>
+    <span class="keyword">End</span>
+<span class="keyword">End</span></pre>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ANIMATION
+========================= -->
+
+<section class="reveal">
+
+    <div class="showcase">
+
+        <div class="mini-code">
+
+<pre><span class="keyword">Animate</span> DemoButton
+
+    <span class="keyword">Property</span> Scale
+
+    <span class="keyword">From</span> 1
+
+    <span class="keyword">To</span> 1.1
+
+    <span class="keyword">Duration</span> 150
+
+    <span class="keyword">Easing</span> EaseOut
+
+<span class="keyword">End</span></pre>
+
+        </div>
+
+        <div class="showcase-text">
+
+            <div class="section-label">
+                Animation Engine
+            </div>
+
+            <h2>
+                Motion built into the ecosystem.
+            </h2>
+
+            <p>
+                InfiniteScript's animation architecture
+                is designed around timelines, tracks,
+                keyframes, easing and interpolation.
+            </p>
+
+            <div class="showcase-list">
+
+                <div>
+                    Timeline-based animation
+                </div>
+
+                <div>
+                    Easing functions
+                </div>
+
+                <div>
+                    Keyframes & property tracks
+                </div>
+
+                <div>
+                    Spring-based motion
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     BACKEND + 3D
+========================= -->
+
+<section class="reveal">
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            Beyond Applications
+        </div>
+
+        <h2>
+            One ecosystem. More possibilities.
+        </h2>
+
+        <p>
+            The long-term vision goes beyond basic programs,
+            bringing backend services and interactive 3D
+            experiences into the same language.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⇄
+            </div>
+
+            <h3>
+                Backend & APIs
+            </h3>
+
+            <p>
+                Define routes, handle requests and build
+                application services using the same language.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ◇
+            </div>
+
+            <h3>
+                3D Experiences
+            </h3>
+
+            <p>
+                Future scene support can bring cameras,
+                models, lights, transforms and interactive
+                worlds into InfiniteScript.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⚙
+            </div>
+
+            <h3>
+                Developer Tools
+            </h3>
+
+            <p>
+                Inf.exe provides a single entry point for
+                checking, building and running programs.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ROADMAP
+========================= -->
+
+<section id="roadmap" class="reveal">
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            Roadmap
+        </div>
+
+        <h2>
+            The language is only getting started.
+        </h2>
+
+        <p>
+            InfiniteScript is being built in stages,
+            starting with the core language and expanding
+            into a larger development ecosystem.
+        </p>
+
+    </div>
+
+    <div class="roadmap">
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                PHASE 01
+            </div>
+
+            <h3>
+                Core Language
+            </h3>
+
+            <p>
+                Lexer, parser, AST, interpreter,
+                variables, functions, control flow,
+                storage and CLI tooling.
+            </p>
+
+        </div>
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                PHASE 02
+            </div>
+
+            <h3>
+                Infinite UI
+            </h3>
+
+            <p>
+                Expand native UI controls, layouts,
+                events, styling and animation support.
+            </p>
+
+        </div>
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                PHASE 03
+            </div>
+
+            <h3>
+                Application Platform
+            </h3>
+
+            <p>
+                Backend capabilities, packages,
+                networking and additional developer
+                tooling.
+            </p>
+
+        </div>
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                PHASE 04
+            </div>
+
+            <h3>
+                3D Engine
+            </h3>
+
+            <p>
+                Scenes, cameras, models, lights,
+                transforms and interactive 3D systems.
+            </p>
+
+        </div>
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                PHASE 05
+            </div>
+
+            <h3>
+                Self Hosting
+            </h3>
+
+            <p>
+                Move more of the language's tooling
+                toward being implemented by InfiniteScript
+                itself.
+            </p>
+
+        </div>
+
+        <div class="roadmap-item">
+
+            <div class="roadmap-number">
+                PHASE ∞
+            </div>
+
+            <h3>
+                Infinite Possibilities
+            </h3>
+
+            <p>
+                Continue expanding the ecosystem while
+                keeping the language readable and unified.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     DOCUMENTATION CTA
+========================= -->
+
+<section class="cta reveal" id="download">
 
     <div class="cta-box">
 
-        <div class="section-label">Get InfiniteScript</div>
+        <div class="section-label">
+            Start Building
+        </div>
 
-        <h2>Ready to build?</h2>
+        <h2>
+            Ready to enter the Infinite?
+        </h2>
 
         <p>
-            Download the runtime and start experimenting with InfiniteScript.
+            Learn the language, explore the documentation,
+            inspect the CLI or dive into the source code.
         </p>
 
+        <div class="hero-buttons">
+
+            <a
+                href="documentation.html"
+                class="button primary">
+                Read Documentation →
+            </a>
+
+            <a
+                href="cli.html"
+                class="button secondary">
+                Explore the CLI
+            </a>
+
+            <a
+                href="https://github.com/gameworldyt/Infinite-Script"
+                target="_blank"
+                class="button secondary">
+                GitHub
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div>
+        © 2026 InfiniteScript
+    </div>
+
+    <div class="footer-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="documentation.html">
+            Documentation
+        </a>
+
+        <a href="cli.html">
+            CLI
+        </a>
+
         <a
-            class="btn btn-primary"
             href="https://github.com/gameworldyt/Infinite-Script"
-            target="_blank"
-        >
-            View on GitHub →
+            target="_blank">
+            GitHub
         </a>
 
     </div>
 
-</section>
-
-<footer>
-    <div>
-        <strong>∞ InfiniteScript</strong>
-        &nbsp; · &nbsp;
-        Web Preview
-    </div>
-
-    <div>
-        Native Infinite UI runs through <strong>Inf.exe</strong>
-    </div>
 </footer>
 
 <script>
-const observer = new IntersectionObserver(
-    entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
-        });
-    },
-    {
-        threshold: 0.12
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .12
+        }
+    );
+
+revealElements.forEach(
+    element =>
+        observer.observe(element)
+);
+
+
+/* =========================
+   3D CODE MOVEMENT
+========================= */
+
+const codeCard =
+    document.querySelector(".code-card");
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        if (
+            !codeCard ||
+            window.innerWidth < 850
+        ) {
+            return;
+        }
+
+        const x =
+            event.clientX /
+            window.innerWidth -
+            .5;
+
+        const y =
+            event.clientY /
+            window.innerHeight -
+            .5;
+
+        codeCard.style.transform =
+            "rotateX(" +
+            (8 - y * 5) +
+            "deg) rotateY(" +
+            (-2 + x * 5) +
+            "deg)";
+
     }
 );
 
-document.querySelectorAll(".reveal").forEach(element => {
-    observer.observe(element);
-});
 </script>
 
 </body>
 </html>
+

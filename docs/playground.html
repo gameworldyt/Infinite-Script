@@ -1,0 +1,1502 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>InfiniteScript Playground 3.0</title>
+
+<style>
+:root {
+    --bg: #02060d;
+    --panel: #07111d;
+    --panel2: #0b1725;
+    --border: rgba(103,232,249,.16);
+    --text: #e8f8ff;
+    --muted: #7894a7;
+    --cyan: #67e8f9;
+    --blue: #38bdf8;
+    --green: #86efac;
+    --yellow: #fde68a;
+    --red: #fca5a5;
+    --purple: #c4b5fd;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(14,116,144,.2),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 30%,
+            rgba(37,99,235,.15),
+            transparent 30%
+        ),
+        var(--bg);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+    padding: 12px 6%;
+
+    min-height: 72px;
+
+    background: rgba(2,6,13,.9);
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(18px);
+}
+
+.site-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.site-logo {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    font-size: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #075985,
+            #22d3ee
+        );
+
+    box-shadow:
+        0 0 28px rgba(34,211,238,.35);
+}
+
+.site-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.site-links a:hover {
+    color: var(--cyan);
+}
+
+.page {
+    width: min(1500px, 92%);
+    margin: 0 auto;
+    padding: 65px 0;
+}
+
+.hero {
+    max-width: 900px;
+    margin-bottom: 35px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    color: var(--cyan);
+    background: rgba(8,47,73,.4);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+    background: var(--green);
+
+    box-shadow: 0 0 14px rgba(134,239,172,.7);
+}
+
+h1 {
+    margin: 22px 0 14px;
+
+    font-size: clamp(42px,6vw,78px);
+    line-height: 1;
+    letter-spacing: -3px;
+}
+
+.gradient {
+    background:
+        linear-gradient(
+            100deg,
+            #e8f8ff,
+            #67e8f9,
+            #38bdf8,
+            #c4b5fd
+        );
+
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove {
+    0%,100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.hero p {
+    max-width: 760px;
+
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.warning {
+    margin-top: 25px;
+    padding: 16px 18px;
+
+    border: 1px solid rgba(253,230,138,.25);
+    border-radius: 14px;
+
+    color: #fef3c7;
+    background: rgba(120,53,15,.2);
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    flex-wrap: wrap;
+
+    margin-bottom: 16px;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+select,
+button,
+input {
+    padding: 11px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    color: var(--text);
+    background: var(--panel2);
+
+    font: inherit;
+    font-size: 13px;
+
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+button:hover {
+    border-color: rgba(103,232,249,.65);
+    transform: translateY(-1px);
+}
+
+button.primary {
+    color: #001018;
+    background:
+        linear-gradient(
+            135deg,
+            #67e8f9,
+            #38bdf8
+        );
+
+    border-color: transparent;
+    font-weight: 800;
+}
+
+button.danger {
+    color: #fecaca;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+    background: #64748b;
+}
+
+.status.running .status-dot {
+    background: var(--yellow);
+    box-shadow: 0 0 14px rgba(253,230,138,.7);
+}
+
+.status.success .status-dot {
+    background: var(--green);
+    box-shadow: 0 0 14px rgba(134,239,172,.7);
+}
+
+.status.error .status-dot {
+    background: var(--red);
+    box-shadow: 0 0 14px rgba(252,165,165,.7);
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(0,1.2fr) minmax(300px,.8fr);
+    gap: 18px;
+}
+
+.panel {
+    min-width: 0;
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(11,23,37,.98),
+            rgba(3,10,19,.98)
+        );
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.25);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 14px 18px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dots span {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+    background: #334155;
+}
+
+.dots span:nth-child(1) {
+    background: #fb7185;
+}
+
+.dots span:nth-child(2) {
+    background: #facc15;
+}
+
+.dots span:nth-child(3) {
+    background: #4ade80;
+}
+
+.editor {
+    display: grid;
+    grid-template-columns: 52px minmax(0,1fr);
+
+    min-height: 550px;
+}
+
+.line-numbers {
+    padding: 20px 10px;
+
+    color: #3f6074;
+    background: rgba(2,6,13,.5);
+
+    text-align: right;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    user-select: none;
+    overflow: hidden;
+}
+
+.code-area {
+    position: relative;
+    min-width: 0;
+}
+
+.highlight-layer,
+#code {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    min-height: 550px;
+
+    margin: 0;
+    padding: 20px;
+
+    border: 0;
+    outline: 0;
+
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    tab-size: 4;
+}
+
+.highlight-layer {
+    pointer-events: none;
+    color: #dffaff;
+    overflow: hidden;
+}
+
+#code {
+    z-index: 2;
+
+    resize: vertical;
+
+    color: transparent;
+    caret-color: #e8f8ff;
+
+    background: transparent;
+}
+
+#code::selection {
+    background: rgba(34,211,238,.25);
+}
+
+.token-keyword {
+    color: var(--purple);
+    font-weight: 700;
+}
+
+.token-string {
+    color: var(--green);
+}
+
+.token-number {
+    color: #f9a8d4;
+}
+
+.token-comment {
+    color: #52758a;
+    font-style: italic;
+}
+
+.token-command {
+    color: var(--cyan);
+    font-weight: 700;
+}
+
+.output {
+    min-height: 550px;
+
+    padding: 20px;
+
+    color: #b9d5e2;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 13px;
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.output.empty {
+    color: #496477;
+}
+
+.output-line {
+    margin-bottom: 6px;
+}
+
+.output-line.success {
+    color: var(--green);
+}
+
+.output-line.info {
+    color: var(--cyan);
+}
+
+.output-line.error {
+    color: var(--red);
+}
+
+.input-box {
+    display: none;
+
+    gap: 10px;
+    flex-wrap: wrap;
+
+    margin-top: 18px;
+    padding: 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: rgba(7,17,29,.8);
+}
+
+.input-box.visible {
+    display: flex;
+}
+
+.input-box input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 18px;
+
+    color: var(--muted);
+    font-size: 12px;
+}
+
+kbd {
+    padding: 3px 7px;
+
+    border: 1px solid rgba(148,163,184,.25);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+
+    color: #cbd5e1;
+    background: #0f172a;
+
+    font-family: inherit;
+}
+
+footer {
+    padding: 35px 6%;
+
+    border-top: 1px solid var(--border);
+
+    color: #526c7e;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media(max-width:1000px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:700px) {
+    .site-nav {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .page {
+        width: 94%;
+        padding: 45px 0;
+    }
+
+    h1 {
+        letter-spacing: -1.5px;
+    }
+
+    .editor {
+        grid-template-columns: 42px minmax(0,1fr);
+    }
+
+    .line-numbers {
+        padding: 20px 8px;
+        font-size: 12px;
+    }
+
+    .highlight-layer,
+    #code {
+        padding: 20px 12px;
+        font-size: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="site-nav">
+    <a href="index.html" class="site-brand">
+        <span class="site-logo">∞</span>
+        <span>InfiniteScript</span>
+    </a>
+
+    <div class="site-links">
+        <a href="index.html">Home</a>
+        <a href="documentation.html">Docs</a>
+        <a href="tutorial.html">Tutorial</a>
+        <a href="examples.html">Examples</a>
+        <a href="dictionary.html">Dictionary</a>
+        <a href="playground.html">Playground</a>
+        <a href="cli.html">CLI</a>
+        <a href="downloads.html">Download</a>
+        <a href="https://github.com/gameworldyt/Infinite-Script" target="_blank">
+            GitHub
+        </a>
+    </div>
+</nav>
+
+<main class="page">
+
+    <section class="hero">
+        <span class="badge">
+            <span class="badge-dot"></span>
+            InfiniteScript Playground 3.0
+        </span>
+
+        <h1>
+            Run more than
+            <span class="gradient">just examples.</span>
+        </h1>
+
+        <p>
+            Experiment with variables, conditions, loops, functions,
+            random numbers, and input using the expanded browser preview.
+        </p>
+
+        <div class="warning">
+            ⚠ <strong>Browser Preview:</strong>
+            this interpreter is written in JavaScript for learning and
+            demonstration. The complete native language still runs through
+            <code>Inf.exe</code> on Windows.
+        </div>
+    </section>
+
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <select id="exampleSelect">
+                <option value="hello">Hello World</option>
+                <option value="variables">Variables</option>
+                <option value="conditions">Conditions</option>
+                <option value="loop">For Loop</option>
+                <option value="function">Functions</option>
+                <option value="random">Random Number</option>
+                <option value="input">Input</option>
+                <option value="ui">Infinite UI</option>
+            </select>
+
+            <button id="loadExample">
+                Load Example
+            </button>
+        </div>
+
+        <div class="toolbar-group">
+            <span class="status" id="status">
+                <span class="status-dot"></span>
+                Ready
+            </span>
+
+            <button id="clearOutput" class="danger">
+                Clear
+            </button>
+
+            <button id="runCode" class="primary">
+                ▶ Run
+            </button>
+        </div>
+    </div>
+
+    <section class="workspace">
+
+        <div class="panel">
+            <div class="panel-header">
+                <div class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <span>main.infs</span>
+                <span>InfiniteScript</span>
+            </div>
+
+            <div class="editor">
+                <div class="line-numbers" id="lineNumbers">1</div>
+
+                <div class="code-area">
+                    <pre class="highlight-layer" id="highlight"></pre>
+
+                    <textarea
+                        id="code"
+                        spellcheck="false"
+                        aria-label="InfiniteScript editor"
+                    >Local Storage Money = 100
+Change Money by 50
+Say Money</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>Output Console</span>
+                <span id="outputCount">0 lines</span>
+            </div>
+
+            <div class="output empty" id="output">
+                Run your InfiniteScript code to see output here.
+            </div>
+
+            <div class="input-box" id="inputBox">
+                <input
+                    id="inputValue"
+                    placeholder="Enter a value for Input..."
+                >
+
+                <button id="submitInput" class="primary">
+                    Submit Input
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="shortcuts">
+        <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd> Run</span>
+        <span><kbd>Tab</kbd> Indent</span>
+        <span><kbd>Esc</kbd> Clear status</span>
+        <a href="dictionary.html">Open syntax dictionary →</a>
+    </div>
+
+</main>
+
+<footer>
+    InfiniteScript · One language. Infinite possibilities.
+</footer>
+
+<script>
+const codeEditor = document.getElementById("code");
+const highlight = document.getElementById("highlight");
+const lineNumbers = document.getElementById("lineNumbers");
+const output = document.getElementById("output");
+const outputCount = document.getElementById("outputCount");
+const status = document.getElementById("status");
+const inputBox = document.getElementById("inputBox");
+const inputValue = document.getElementById("inputValue");
+
+const examples = {
+    hello: `Say "Hello from InfiniteScript!"`,
+
+    variables: `Local Storage Money = 100
+Change Money by 50
+Set Money = Money + 25
+Say Money`,
+
+    conditions: `Local Storage Score = 85
+
+If Score >= 50
+    Say "You passed!"
+Else
+    Say "Try again!"
+End`,
+
+    loop: `For i = 1 to 5
+    Say i
+End`,
+
+    function: `Function GiveMoney Amount
+    Say Amount
+    Return Amount
+End
+
+GiveMoney 100`,
+
+    random: `Random Number Roll = 1 to 6
+Say Roll`,
+
+    input: `Input PlayerName
+Say PlayerName`,
+
+    ui: `UI
+    Window Main
+        Title "My Infinite App"
+        Size 800, 600
+
+        Button GetStarted
+            Text "Get Started"
+            Say "Welcome to InfiniteScript!"
+        End
+    End
+End`
+};
+
+function escapeHTML(value) {
+    return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+}
+
+function highlightCode(source) {
+    let html = escapeHTML(source);
+
+    html = html.replace(
+        /^(\/-.*)$/gm,
+        '<span class="token-comment">$1</span>'
+    );
+
+    html = html.replace(
+        /(&quot;.*?&quot;)/g,
+        '<span class="token-string">$1</span>'
+    );
+
+    html = html.replace(
+        /\b(\d+(?:\.\d+)?)\b/g,
+        '<span class="token-number">$1</span>'
+    );
+
+    const keywords = [
+        "Local Storage",
+        "Else If",
+        "On Click",
+        "Random Number",
+        "Say",
+        "Set",
+        "Change",
+        "If",
+        "Else",
+        "End",
+        "For",
+        "While",
+        "Break",
+        "Continue",
+        "Function",
+        "Return",
+        "Input",
+        "Random",
+        "UI",
+        "Window",
+        "Title",
+        "Size",
+        "Text",
+        "Button",
+        "Animate",
+        "Backend",
+        "Route",
+        "Scene",
+        "Camera",
+        "Model",
+        "Light"
+    ];
+
+    keywords.sort((a,b) => b.length - a.length);
+
+    for (const keyword of keywords) {
+        const escaped =
+            keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+        html = html.replace(
+            new RegExp("\\b(" + escaped + ")\\b", "g"),
+            '<span class="token-keyword">$1</span>'
+        );
+    }
+
+    html = html.replace(
+        /\b(true|false)\b/g,
+        '<span class="token-command">$1</span>'
+    );
+
+    highlight.innerHTML = html + "\n";
+}
+
+function updateEditor() {
+    const count = codeEditor.value.split("\n").length;
+
+    lineNumbers.textContent = Array.from(
+        { length: count },
+        (_, index) => index + 1
+    ).join("\n");
+
+    highlightCode(codeEditor.value);
+}
+
+function setStatus(type, text) {
+    status.className = "status " + type;
+
+    status.innerHTML =
+        '<span class="status-dot"></span>' + text;
+}
+
+function clearOutput() {
+    output.textContent = "";
+    output.className = "output empty";
+    outputCount.textContent = "0 lines";
+    inputBox.classList.remove("visible");
+    setStatus("", "Ready");
+}
+
+function writeOutput(lines, type = "") {
+    output.className = "output";
+    output.innerHTML = "";
+
+    lines.forEach(line => {
+        const element = document.createElement("div");
+
+        element.className = "output-line " + type;
+        element.textContent = line;
+
+        output.appendChild(element);
+    });
+
+    outputCount.textContent =
+        lines.length + (lines.length === 1 ? " line" : " lines");
+}
+
+function resolveValue(value, variables) {
+    value = value.trim();
+
+    if (
+        value.startsWith('"') &&
+        value.endsWith('"')
+    ) {
+        return value.slice(1, -1);
+    }
+
+    if (value === "true") {
+        return true;
+    }
+
+    if (value === "false") {
+        return false;
+    }
+
+    if (!Number.isNaN(Number(value))) {
+        return Number(value);
+    }
+
+    if (
+        Object.prototype.hasOwnProperty.call(
+            variables,
+            value
+        )
+    ) {
+        return variables[value];
+    }
+
+    const arithmetic =
+        value.match(/^(.+?)\s*([+\-*/])\s*(.+)$/);
+
+    if (arithmetic) {
+        const left = Number(
+            resolveValue(arithmetic[1], variables)
+        );
+
+        const right = Number(
+            resolveValue(arithmetic[3], variables)
+        );
+
+        switch (arithmetic[2]) {
+            case "+":
+                return left + right;
+
+            case "-":
+                return left - right;
+
+            case "*":
+                return left * right;
+
+            case "/":
+                return left / right;
+        }
+    }
+
+    return value;
+}
+
+function compare(left, operator, right) {
+    switch (operator) {
+        case "==":
+            return left == right;
+
+        case ">":
+            return left > right;
+
+        case "<":
+            return left < right;
+
+        case ">=":
+            return left >= right;
+
+        case "<=":
+            return left <= right;
+
+        default:
+            return false;
+    }
+}
+
+function findMatchingEnd(lines, startIndex) {
+    let depth = 0;
+
+    for (
+        let index = startIndex;
+        index < lines.length;
+        index++
+    ) {
+        const line = lines[index].trim();
+
+        if (
+            line.startsWith("If ") ||
+            line.startsWith("For ") ||
+            line.startsWith("While ") ||
+            line.startsWith("Function ") ||
+            line.startsWith("UI") ||
+            line.startsWith("Window ") ||
+            line.startsWith("Button ")
+        ) {
+            depth++;
+        }
+
+        if (line === "End") {
+            depth--;
+
+            if (depth === 0) {
+                return index;
+            }
+        }
+    }
+
+    return -1;
+}
+
+function executeLines(lines, variables, functions, outputLines) {
+    for (let index = 0; index < lines.length; index++) {
+        const line = lines[index].trim();
+
+        if (!line || line.startsWith("/-")) {
+            continue;
+        }
+
+        if (line.startsWith("Function ")) {
+            const match = line.match(
+                /^Function\s+([A-Za-z_][A-Za-z0-9_]*)(?:\s+(.+))?$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid Function syntax on line " +
+                    (index + 1)
+                );
+            }
+
+            const name = match[1];
+            const parameters = match[2]
+                ? match[2].split(/\s+/)
+                : [];
+
+            const endIndex =
+                findMatchingEnd(lines, index);
+
+            if (endIndex === -1) {
+                throw new Error(
+                    "Function is missing End on line " +
+                    (index + 1)
+                );
+            }
+
+            functions[name] = {
+                parameters,
+                body: lines.slice(index + 1, endIndex)
+            };
+
+            index = endIndex;
+            continue;
+        }
+
+        if (line.startsWith("Local Storage ")) {
+            const match = line.match(
+                /^Local Storage ([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid Local Storage syntax on line " +
+                    (index + 1)
+                );
+            }
+
+            variables[match[1]] =
+                resolveValue(match[2], variables);
+
+            continue;
+        }
+
+        if (line.startsWith("Set ")) {
+            const match = line.match(
+                /^Set ([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid Set syntax on line " +
+                    (index + 1)
+                );
+            }
+
+            variables[match[1]] =
+                resolveValue(match[2], variables);
+
+            continue;
+        }
+
+        if (line.startsWith("Change ")) {
+            const match = line.match(
+                /^Change ([A-Za-z_][A-Za-z0-9_]*)\s+by\s+(.+)$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid Change syntax on line " +
+                    (index + 1)
+                );
+            }
+
+            const name = match[1];
+            const amount =
+                Number(resolveValue(match[2], variables));
+
+            variables[name] =
+                Number(variables[name] ?? 0) + amount;
+
+            continue;
+        }
+
+        if (line.startsWith("Random Number ")) {
+            const match = line.match(
+                /^Random Number ([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+?)\s+to\s+(.+)$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid Random Number syntax on line " +
+                    (index + 1)
+                );
+            }
+
+            const name = match[1];
+            const minimum =
+                Number(resolveValue(match[2], variables));
+            const maximum =
+                Number(resolveValue(match[3], variables));
+
+            variables[name] =
+                Math.floor(
+                    Math.random() *
+                    (maximum - minimum + 1)
+                ) + minimum;
+
+            continue;
+        }
+
+        if (line.startsWith("Input ")) {
+            const name = line.slice(6).trim();
+
+            inputBox.classList.add("visible");
+
+            outputLines.push(
+                "[Input required] Enter a value for " + name
+            );
+
+            variables[name] = inputValue.value || "";
+
+            continue;
+        }
+
+        if (line.startsWith("If ")) {
+            const match = line.slice(3).match(
+                /^(.+?)\s+(==|>=|<=|>|<)\s+(.+)$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid If condition on line " +
+                    (index + 1)
+                );
+            }
+
+            const left =
+                resolveValue(match[1], variables);
+
+            const right =
+                resolveValue(match[3], variables);
+
+            const endIndex =
+                findMatchingEnd(lines, index);
+
+            if (endIndex === -1) {
+                throw new Error(
+                    "If is missing End on line " +
+                    (index + 1)
+                );
+            }
+
+            const body = lines.slice(index + 1, endIndex);
+
+            if (
+                compare(
+                    left,
+                    match[2],
+                    right
+                )
+            ) {
+                executeLines(
+                    body,
+                    variables,
+                    functions,
+                    outputLines
+                );
+            }
+
+            index = endIndex;
+            continue;
+        }
+
+        if (line.startsWith("For ")) {
+            const match = line.match(
+                /^For\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+?)\s+to\s+(.+)$/
+            );
+
+            if (!match) {
+                throw new Error(
+                    "Invalid For syntax on line " +
+                    (index + 1)
+                );
+            }
+
+            const variableName = match[1];
+            const start =
+                Number(resolveValue(match[2], variables));
+            const end =
+                Number(resolveValue(match[3], variables));
+
+            const endIndex =
+                findMatchingEnd(lines, index);
+
+            if (endIndex === -1) {
+                throw new Error(
+                    "For is missing End on line " +
+                    (index + 1)
+                );
+            }
+
+            const body = lines.slice(index + 1, endIndex);
+            const step = start <= end ? 1 : -1;
+
+            let safety = 0;
+
+            for (
+                let value = start;
+                step > 0 ? value <= end : value >= end;
+                value += step
+            ) {
+                safety++;
+
+                if (safety > 10000) {
+                    throw new Error(
+                        "For loop exceeded browser safety limit."
+                    );
+                }
+
+                variables[variableName] = value;
+
+                executeLines(
+                    body,
+                    variables,
+                    functions,
+                    outputLines
+                );
+            }
+
+            index = endIndex;
+            continue;
+        }
+
+        if (line.startsWith("Say ")) {
+            outputLines.push(
+                String(
+                    resolveValue(
+                        line.slice(4),
+                        variables
+                    )
+                )
+            );
+
+            continue;
+        }
+
+        const call =
+            line.match(
+                /^([A-Za-z_][A-Za-z0-9_]*)(?:\s+(.+))?$/
+            );
+
+        if (call && functions[call[1]]) {
+            const functionData = functions[call[1]];
+
+            const argumentsList = call[2]
+                ? call[2].split(/\s+/)
+                : [];
+
+            const localVariables = {
+                ...variables
+            };
+
+            functionData.parameters.forEach(
+                (parameter, parameterIndex) => {
+                    localVariables[parameter] =
+                        resolveValue(
+                            argumentsList[parameterIndex] ?? "",
+                            variables
+                        );
+                }
+            );
+
+            executeLines(
+                functionData.body,
+                localVariables,
+                functions,
+                outputLines
+            );
+
+            continue;
+        }
+
+        if (
+            line.startsWith("UI") ||
+            line.startsWith("Window ") ||
+            line.startsWith("Title ") ||
+            line.startsWith("Size ") ||
+            line.startsWith("Button ") ||
+            line.startsWith("Text ") ||
+            line.startsWith("On Click")
+        ) {
+            outputLines.push(
+                "[Browser preview] Native UI command detected: " +
+                line
+            );
+
+            continue;
+        }
+
+        if (line === "End") {
+            continue;
+        }
+
+        throw new Error(
+            "Unrecognised syntax on line " +
+            (index + 1) +
+            ": " +
+            line
+        );
+    }
+}
+
+function runCode() {
+    clearOutput();
+    setStatus("running", "Running...");
+
+    setTimeout(() => {
+        try {
+            const variables = {};
+            const functions = {};
+            const outputLines = [];
+
+            executeLines(
+                codeEditor.value.split("\n"),
+                variables,
+                functions,
+                outputLines
+            );
+
+            if (outputLines.length === 0) {
+                outputLines.push(
+                    "Program finished with no console output."
+                );
+            }
+
+            writeOutput(outputLines, "success");
+            setStatus("success", "Completed");
+        } catch (error) {
+            writeOutput(
+                [
+                    "Error [INF2000]",
+                    error.message
+                ],
+                "error"
+            );
+
+            setStatus("error", "Error");
+        }
+    }, 180);
+}
+
+codeEditor.addEventListener("input", updateEditor);
+
+codeEditor.addEventListener("scroll", () => {
+    lineNumbers.scrollTop = codeEditor.scrollTop;
+    highlight.scrollTop = codeEditor.scrollTop;
+});
+
+codeEditor.addEventListener("keydown", event => {
+    if (event.key === "Tab") {
+        event.preventDefault();
+
+        const start = codeEditor.selectionStart;
+        const end = codeEditor.selectionEnd;
+
+        codeEditor.value =
+            codeEditor.value.substring(0, start) +
+            "    " +
+            codeEditor.value.substring(end);
+
+        codeEditor.selectionStart = start + 4;
+        codeEditor.selectionEnd = start + 4;
+
+        updateEditor();
+    }
+
+    if (event.ctrlKey && event.key === "Enter") {
+        event.preventDefault();
+        runCode();
+    }
+
+    if (event.key === "Escape") {
+        setStatus("", "Ready");
+    }
+});
+
+document.getElementById("runCode")
+    .addEventListener("click", runCode);
+
+document.getElementById("clearOutput")
+    .addEventListener("click", clearOutput);
+
+document.getElementById("loadExample")
+    .addEventListener("click", () => {
+        const selected =
+            document.getElementById("exampleSelect").value;
+
+        codeEditor.value = examples[selected];
+
+        updateEditor();
+        clearOutput();
+    });
+
+document.getElementById("submitInput")
+    .addEventListener("click", () => {
+        runCode();
+    });
+
+updateEditor();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,816 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>InfiniteScript — Tutorial</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Inter, Arial, sans-serif;
+    background: #02060d;
+    color: #e8f8ff;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(14,165,233,.12), transparent 32%),
+        #02060d;
+}
+
+.grid {
+    position: absolute;
+    width: 220%;
+    height: 220%;
+    left: -60%;
+    top: -30%;
+    opacity: .14;
+
+    background-image:
+        linear-gradient(rgba(56,189,248,.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,.2) 1px, transparent 1px);
+
+    background-size: 70px 70px;
+
+    transform: perspective(700px) rotateX(62deg);
+
+    animation: gridMove 18s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        transform:
+            perspective(700px)
+            rotateX(62deg)
+            translateY(0);
+    }
+
+    to {
+        transform:
+            perspective(700px)
+            rotateX(62deg)
+            translateY(70px);
+    }
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(5px);
+    animation: float 10s ease-in-out infinite;
+}
+
+.orb.one {
+    width: 350px;
+    height: 350px;
+    left: -150px;
+    top: 20%;
+    background:
+        radial-gradient(circle, rgba(34,211,238,.14), transparent 70%);
+}
+
+.orb.two {
+    width: 400px;
+    height: 400px;
+    right: -160px;
+    top: 55%;
+    background:
+        radial-gradient(circle, rgba(37,99,235,.13), transparent 70%);
+    animation-delay: -4s;
+}
+
+@keyframes float {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-35px);
+    }
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    height: 74px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    border-bottom:
+        1px solid rgba(125,211,252,.08);
+
+    background:
+        rgba(2,6,13,.78);
+
+    backdrop-filter: blur(18px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    font-size: 19px;
+    font-weight: 750;
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    font-size: 24px;
+
+    background:
+        linear-gradient(135deg,#0369a1,#22d3ee);
+
+    box-shadow:
+        0 0 25px rgba(34,211,238,.35);
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+
+    color: #7891a2;
+
+    font-size: 14px;
+}
+
+.nav-links a {
+    transition: .25s ease;
+}
+
+.nav-links a:hover {
+    color: #67e8f9;
+}
+
+.container {
+    width: min(1150px, 90%);
+    margin: auto;
+}
+
+.hero {
+    padding: 100px 0 80px;
+}
+
+.label {
+    color: #22d3ee;
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-size: clamp(45px,7vw,76px);
+    letter-spacing: -4px;
+    line-height: 1;
+    margin-bottom: 25px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #e0faff,
+            #67e8f9,
+            #60a5fa,
+            #e0faff
+        );
+
+    background-size: 300% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+        gradient 7s linear infinite;
+}
+
+@keyframes gradient {
+    to {
+        background-position: 300% center;
+    }
+}
+
+.hero p {
+    max-width: 720px;
+    color: #8097a8;
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 55px;
+    padding-bottom: 120px;
+}
+
+.sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.sidebar a {
+    display: block;
+
+    padding: 10px 13px;
+
+    border-left:
+        1px solid rgba(125,211,252,.1);
+
+    color: #60798a;
+
+    font-size: 13px;
+
+    transition: .2s ease;
+}
+
+.sidebar a:hover {
+    color: #67e8f9;
+    border-color: #22d3ee;
+    background: rgba(14,165,233,.05);
+}
+
+.content section {
+    margin-bottom: 90px;
+}
+
+.content h2 {
+    font-size: 32px;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+}
+
+.content h3 {
+    margin: 35px 0 13px;
+    font-size: 20px;
+}
+
+.content p {
+    color: #8097a8;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.code {
+    margin: 22px 0;
+
+    border:
+        1px solid rgba(103,232,249,.12);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: #030b14;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.3);
+}
+
+.code-header {
+    padding: 13px 18px;
+
+    border-bottom:
+        1px solid rgba(125,211,252,.07);
+
+    color: #587384;
+
+    font-size: 12px;
+}
+
+pre {
+    padding: 23px;
+
+    overflow-x: auto;
+
+    color: #bdefff;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.kw {
+    color: #67e8f9;
+}
+
+.str {
+    color: #a5f3fc;
+}
+
+.num {
+    color: #93c5fd;
+}
+
+.comment {
+    color: #496474;
+}
+
+.tip {
+    padding: 20px;
+
+    border:
+        1px solid rgba(34,211,238,.14);
+
+    border-radius: 13px;
+
+    background:
+        rgba(8,47,73,.25);
+
+    color: #8cc9dc;
+
+    line-height: 1.7;
+
+    margin: 25px 0;
+}
+
+.next {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-top: 70px;
+}
+
+.next a {
+    padding: 15px 19px;
+
+    border:
+        1px solid rgba(125,211,252,.1);
+
+    border-radius: 11px;
+
+    background:
+        rgba(8,25,42,.6);
+
+    color: #8db5c5;
+
+    transition: .25s ease;
+}
+
+.next a:hover {
+    transform: translateY(-3px);
+    border-color: rgba(56,189,248,.3);
+    color: #67e8f9;
+}
+
+footer {
+    border-top:
+        1px solid rgba(125,211,252,.07);
+
+    padding: 35px 7%;
+
+    display: flex;
+    justify-content: space-between;
+
+    color: #506675;
+
+    font-size: 13px;
+}
+
+@media(max-width:800px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .nav-links a:not(:first-child) {
+        display: none;
+    }
+}
+
+@media(max-width:520px) {
+    .hero {
+        padding-top: 70px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="grid"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+</div>
+
+<nav>
+
+    <a href="index.html" class="brand">
+        <span class="logo">∞</span>
+        InfiniteScript
+    </a>
+
+    <div class="nav-links">
+        <a href="documentation.html">Docs</a>
+        <a href="tutorial.html">Tutorial</a>
+        <a href="examples.html">Examples</a>
+        <a href="cli.html">CLI</a>
+        <a href="index.html">Home</a>
+    </div>
+
+</nav>
+
+<div class="container">
+
+<section class="hero">
+
+    <div class="label">
+        Beginner Tutorial
+    </div>
+
+    <h1>
+        Learn InfiniteScript.
+    </h1>
+
+    <p>
+        Start with the fundamentals and gradually build
+        real InfiniteScript programs. This tutorial assumes
+        little or no programming experience.
+    </p>
+
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+    <a href="#hello">
+        Hello World
+    </a>
+
+    <a href="#values">
+        Values
+    </a>
+
+    <a href="#variables">
+        Variables
+    </a>
+
+    <a href="#conditions">
+        Conditions
+    </a>
+
+    <a href="#loops">
+        Loops
+    </a>
+
+    <a href="#functions">
+        Functions
+    </a>
+
+    <a href="#input">
+        Input
+    </a>
+
+    <a href="#random">
+        Random
+    </a>
+
+    <a href="#ui">
+        Your First UI
+    </a>
+
+</aside>
+
+<main class="content">
+
+<section id="hello">
+
+    <h2>01 — Hello World</h2>
+
+    <p>
+        InfiniteScript programs use the
+        <strong>.infs</strong> file extension.
+        The simplest program can print text using
+        <strong>Say</strong>.
+    </p>
+
+    <div class="code">
+        <div class="code-header">
+            Hello.infs
+        </div>
+
+<pre><span class="kw">Say</span> <span class="str">"Hello World!"</span></pre>
+
+    </div>
+
+    <p>
+        Save the file and run it with:
+    </p>
+
+    <div class="code">
+
+<pre>.\Inf.exe run Hello.infs</pre>
+
+    </div>
+
+</section>
+
+<section id="values">
+
+    <h2>02 — Values</h2>
+
+    <p>
+        InfiniteScript supports several basic values.
+    </p>
+
+    <div class="cards">
+
+        <div class="tip">
+            <strong>Text</strong><br>
+            Words and sentences.
+        </div>
+
+        <div class="tip">
+            <strong>Number</strong><br>
+            Whole numbers and decimals.
+        </div>
+
+        <div class="tip">
+            <strong>Boolean</strong><br>
+            True or false.
+        </div>
+
+    </div>
+
+</section>
+
+<section id="variables">
+
+    <h2>03 — Variables</h2>
+
+    <p>
+        Variables let your program remember information.
+        InfiniteScript uses readable storage syntax.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">Local Storage</span> Money = <span class="num">100</span>
+
+<span class="kw">Local Storage</span> PlayerName = <span class="str">"Adan"</span>
+
+<span class="kw">Local Storage</span> IsAdmin = <span class="kw">true</span></pre>
+
+    </div>
+
+    <p>
+        You can change a stored value:
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">Change</span> Money by <span class="num">50</span></pre>
+
+    </div>
+
+</section>
+
+<section id="conditions">
+
+    <h2>04 — Conditions</h2>
+
+    <p>
+        Conditions allow your program to make decisions.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">If</span> Money &gt; <span class="num">100</span>
+    <span class="kw">Say</span> <span class="str">"You have lots of money."</span>
+
+<span class="kw">Else</span>
+    <span class="kw">Say</span> <span class="str">"You need more money."</span>
+
+<span class="kw">End</span></pre>
+
+    </div>
+
+</section>
+
+<section id="loops">
+
+    <h2>05 — Loops</h2>
+
+    <p>
+        A loop repeats code.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">For</span> i = <span class="num">1</span> to <span class="num">5</span>
+    <span class="kw">Say</span> i
+<span class="kw">End</span></pre>
+
+    </div>
+
+    <p>
+        This runs the body five times.
+    </p>
+
+</section>
+
+<section id="functions">
+
+    <h2>06 — Functions</h2>
+
+    <p>
+        Functions allow you to package reusable behaviour.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">Function</span> GiveMoney Amount
+
+    <span class="kw">Change</span> Money by Amount
+
+    <span class="kw">Return</span> Money
+
+<span class="kw">End</span>
+
+<span class="kw">GiveMoney</span> <span class="num">50</span></pre>
+
+    </div>
+
+</section>
+
+<section id="input">
+
+    <h2>07 — Input</h2>
+
+    <p>
+        Ask the user for information with Input.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">Input</span> PlayerName
+
+<span class="kw">Say</span> PlayerName</pre>
+
+    </div>
+
+    <p>
+        You can also specify the expected type.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">Input Number</span> Age
+
+<span class="kw">Input Boolean</span> IsAdmin</pre>
+
+    </div>
+
+</section>
+
+<section id="random">
+
+    <h2>08 — Random Numbers</h2>
+
+    <p>
+        Random can generate a number within a range.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">Random Number</span> Roll = <span class="num">1</span> to <span class="num">6</span>
+
+<span class="kw">Say</span> Roll</pre>
+
+    </div>
+
+</section>
+
+<section id="ui">
+
+    <h2>09 — Your First Infinite UI</h2>
+
+    <p>
+        InfiniteScript can define native Windows interfaces
+        using Infinite UI.
+    </p>
+
+    <div class="code">
+
+<pre><span class="kw">UI</span>
+
+    <span class="kw">Window</span> Main
+
+        <span class="kw">Title</span> <span class="str">"My First App"</span>
+
+        <span class="kw">Text</span> Welcome
+            <span class="kw">Content</span> <span class="str">"Hello!"</span>
+        <span class="kw">End</span>
+
+        <span class="kw">Button</span> Start
+
+            <span class="kw">Text</span> <span class="str">"Get Started"</span>
+
+            <span class="kw">On Click</span>
+
+                <span class="kw">Say</span> <span class="str">"Welcome!"</span>
+
+            <span class="kw">End</span>
+
+        <span class="kw">End</span>
+
+    <span class="kw">End</span>
+
+<span class="kw">End</span></pre>
+
+    </div>
+
+    <div class="tip">
+        <strong>Next:</strong>
+        Once you understand these basics,
+        explore the full language documentation
+        and example programs.
+    </div>
+
+</section>
+
+<div class="next">
+
+    <a href="documentation.html">
+        ← Documentation
+    </a>
+
+    <a href="examples.html">
+        Explore Examples →
+    </a>
+
+</div>
+
+</main>
+
+</div>
+
+</div>
+
+<footer>
+
+    <span>
+        © 2026 InfiniteScript
+    </span>
+
+    <span>
+        Built for the Infinite future.
+    </span>
+
+</footer>
+
+</body>
+</html>
+

@@ -1,0 +1,368 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InfiniteScript — Syntax Dictionary</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Segoe UI",Arial,sans-serif;background:#02060d;color:#e8f8ff;line-height:1.7}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 50% 0%,rgba(14,165,233,.14),transparent 35%),#02060d}
+.grid{position:absolute;inset:-50%;opacity:.12;background-image:linear-gradient(rgba(56,189,248,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.2) 1px,transparent 1px);background-size:65px 65px;transform:perspective(700px) rotateX(60deg);animation:grid 18s linear infinite}
+@keyframes grid{to{transform:perspective(700px) rotateX(60deg) translateY(65px)}}
+nav{height:74px;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 7%;background:rgba(2,6,13,.8);backdrop-filter:blur(18px);border-bottom:1px solid rgba(125,211,252,.08)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:750;font-size:19px}
+.logo{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#0369a1,#22d3ee);font-size:24px;box-shadow:0 0 25px rgba(34,211,238,.3)}
+.links{display:flex;gap:20px;color:#7690a0;font-size:13px}
+.links a:hover{color:#67e8f9}
+.wrap{width:min(1150px,90%);margin:auto}
+.hero{padding:90px 0 65px}
+.label{color:#22d3ee;text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:700}
+h1{font-size:clamp(45px,7vw,75px);letter-spacing:-4px;line-height:1;margin:15px 0 23px;background:linear-gradient(100deg,#e0faff,#67e8f9,#60a5fa,#e0faff);background-size:300%;color:transparent;background-clip:text;-webkit-background-clip:text;animation:gradient 7s linear infinite}
+@keyframes gradient{to{background-position:300%}}
+.hero p{max-width:730px;color:#7e96a6;font-size:18px}
+.search{margin:30px 0;padding:17px 20px;width:100%;border:1px solid rgba(103,232,249,.12);border-radius:13px;background:#030b14;color:#dffaff;outline:none;font-size:15px}
+.search:focus{border-color:rgba(34,211,238,.5);box-shadow:0 0 25px rgba(34,211,238,.08)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:45px;padding-bottom:100px}
+.side{position:sticky;top:100px;height:max-content}
+.side a{display:block;padding:8px 12px;border-left:1px solid rgba(125,211,252,.1);color:#66808f;font-size:13px}
+.side a:hover{color:#67e8f9;border-color:#22d3ee}
+section{margin-bottom:70px}
+h2{font-size:30px;margin-bottom:16px}
+.entry{padding:22px;margin:18px 0;border:1px solid rgba(125,211,252,.09);border-radius:15px;background:rgba(5,16,29,.72);transition:.25s}
+.entry:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.3)}
+.name{font-family:Consolas,monospace;color:#67e8f9;font-size:18px;font-weight:700}
+.tag{display:inline-block;margin-left:9px;padding:2px 7px;border-radius:5px;background:rgba(34,211,238,.08);color:#7dd3fc;font-size:10px;text-transform:uppercase}
+.desc{color:#8097a8;margin:8px 0 14px}
+pre{overflow:auto;padding:15px;border-radius:9px;background:#030911;color:#bdefff;font-family:Consolas,monospace;font-size:12px}
+footer{padding:35px 7%;border-top:1px solid rgba(125,211,252,.07);display:flex;justify-content:space-between;color:#506675;font-size:13px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.side{position:static}.links a:nth-child(n+3){display:none}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div></div>
+<nav>
+<a class="brand" href="index.html"><span class="logo">∞</span>InfiniteScript</a>
+<div class="links">
+<a href="index.html">Home</a><a href="documentation.html">Docs</a><a href="tutorial.html">Tutorial</a><a href="examples.html">Examples</a><a href="cli.html">CLI</a>
+</div>
+</nav>
+
+<div class="wrap">
+<header class="hero">
+<div class="label">Language Reference</div>
+<h1>Syntax Dictionary.</h1>
+<p>A searchable reference for InfiniteScript commands, structures and language keywords.</p>
+<input id="search" class="search" placeholder="Search syntax... e.g. For, Say, Button, Function">
+</header>
+
+<div class="layout">
+<aside class="side">
+<a href="#output">Output</a>
+<a href="#variables">Variables</a>
+<a href="#control">Control Flow</a>
+<a href="#functions">Functions</a>
+<a href="#input">Input</a>
+<a href="#storage">Storage</a>
+<a href="#ui">Infinite UI</a>
+<a href="#animation">Animation</a>
+<a href="#backend">Backend</a>
+<a href="#three">3D</a>
+</aside>
+
+<main id="dictionary">
+
+<section id="output">
+<h2>Output</h2>
+
+<div class="entry" data-search="say output print text">
+<div class="name">Say <span class="tag">Output</span></div>
+<div class="desc">Outputs a value or message.</div>
+<pre>Say "Hello World"
+Say Money</pre>
+</div>
+</section>
+
+<section id="variables">
+<h2>Variables & Values</h2>
+
+<div class="entry" data-search="local storage variable number text boolean">
+<div class="name">Local Storage <span class="tag">Variable</span></div>
+<div class="desc">Creates a locally stored variable.</div>
+<pre>Local Storage Money = 100
+Local Storage PlayerName = "Adan"
+Local Storage IsAdmin = true</pre>
+</div>
+
+<div class="entry" data-search="set variable assignment">
+<div class="name">Set <span class="tag">Variable</span></div>
+<div class="desc">Assigns a new value to a variable.</div>
+<pre>Set Money = 500</pre>
+</div>
+
+<div class="entry" data-search="change variable arithmetic">
+<div class="name">Change <span class="tag">Variable</span></div>
+<div class="desc">Changes a variable by an amount.</div>
+<pre>Change Money by 100</pre>
+</div>
+</section>
+
+<section id="control">
+<h2>Control Flow</h2>
+
+<div class="entry" data-search="if condition">
+<div class="name">If <span class="tag">Control</span></div>
+<div class="desc">Runs code when a condition is true.</div>
+<pre>If Money &gt; 100
+    Say "Rich!"
+End</pre>
+</div>
+
+<div class="entry" data-search="else condition">
+<div class="name">Else <span class="tag">Control</span></div>
+<div class="desc">Runs when the preceding condition is false.</div>
+<pre>If Money &gt; 100
+    Say "Rich!"
+Else
+    Say "Keep earning."
+End</pre>
+</div>
+
+<div class="entry" data-search="for loop range">
+<div class="name">For <span class="tag">Loop</span></div>
+<div class="desc">Repeats a block across a numeric range.</div>
+<pre>For i = 1 to 5
+    Say i
+End</pre>
+</div>
+
+<div class="entry" data-search="while loop">
+<div class="name">While <span class="tag">Loop</span></div>
+<div class="desc">Repeats a block while a condition remains true.</div>
+<pre>While Money &lt; 500
+    Change Money by 50
+End</pre>
+</div>
+
+<div class="entry" data-search="break loop">
+<div class="name">Break <span class="tag">Loop</span></div>
+<div class="desc">Stops the current loop.</div>
+<pre>Break</pre>
+</div>
+
+<div class="entry" data-search="continue loop">
+<div class="name">Continue <span class="tag">Loop</span></div>
+<div class="desc">Skips to the next loop iteration.</div>
+<pre>Continue</pre>
+</div>
+</section>
+
+<section id="functions">
+<h2>Functions</h2>
+
+<div class="entry" data-search="function declaration parameter">
+<div class="name">Function <span class="tag">Function</span></div>
+<div class="desc">Declares reusable behaviour.</div>
+<pre>Function GiveMoney Amount
+    Change Money by Amount
+End</pre>
+</div>
+
+<div class="entry" data-search="return function result">
+<div class="name">Return <span class="tag">Function</span></div>
+<div class="desc">Returns a value from a function.</div>
+<pre>Return Money</pre>
+</div>
+</section>
+
+<section id="input">
+<h2>Input & Random</h2>
+
+<div class="entry" data-search="input user text">
+<div class="name">Input <span class="tag">Input</span></div>
+<div class="desc">Requests information from the user.</div>
+<pre>Input PlayerName
+Input Number Age
+Input Boolean IsAdmin</pre>
+</div>
+
+<div class="entry" data-search="random number dice">
+<div class="name">Random <span class="tag">Built-in</span></div>
+<div class="desc">Generates a random number within a range.</div>
+<pre>Random Number Roll = 1 to 6</pre>
+</div>
+</section>
+
+<section id="storage">
+<h2>Storage</h2>
+
+<div class="entry" data-search="storage local persistent">
+<div class="name">Local Storage <span class="tag">Storage</span></div>
+<div class="desc">Stores values accessible to the program.</div>
+<pre>Local Storage PlayerName = "Adan"</pre>
+</div>
+</section>
+
+<section id="ui">
+<h2>Infinite UI</h2>
+
+<div class="entry" data-search="ui interface application">
+<div class="name">UI <span class="tag">UI</span></div>
+<div class="desc">Starts a native Infinite UI program.</div>
+<pre>UI
+    Window Main
+        Title "My App"
+    End
+End</pre>
+</div>
+
+<div class="entry" data-search="window native">
+<div class="name">Window <span class="tag">UI</span></div>
+<div class="desc">Creates a native application window.</div>
+<pre>Window Main
+    Title "Infinite App"
+End</pre>
+</div>
+
+<div class="entry" data-search="title window">
+<div class="name">Title <span class="tag">UI</span></div>
+<div class="desc">Sets a window title.</div>
+<pre>Title "InfiniteScript"</pre>
+</div>
+
+<div class="entry" data-search="size window width height">
+<div class="name">Size <span class="tag">UI</span></div>
+<div class="desc">Sets the requested window size.</div>
+<pre>Size 800, 600</pre>
+</div>
+
+<div class="entry" data-search="text content label">
+<div class="name">Text <span class="tag">UI</span></div>
+<div class="desc">Creates text content.</div>
+<pre>Text Welcome
+    Content "Hello!"
+End</pre>
+</div>
+
+<div class="entry" data-search="button click ui">
+<div class="name">Button <span class="tag">UI</span></div>
+<div class="desc">Creates an interactive button.</div>
+<pre>Button Start
+    Text "Get Started"
+End</pre>
+</div>
+
+<div class="entry" data-search="on click event">
+<div class="name">On Click <span class="tag">Event</span></div>
+<div class="desc">Runs code when a UI button is clicked.</div>
+<pre>On Click
+    Say "Clicked!"
+End</pre>
+</div>
+</section>
+
+<section id="animation">
+<h2>Animation</h2>
+
+<div class="entry" data-search="animate animation scale easing duration">
+<div class="name">Animate <span class="tag">Animation</span></div>
+<div class="desc">Describes an animation applied to an object or UI element.</div>
+<pre>Animate DemoButton
+    Property Scale
+    From 1
+    To 1.1
+    Duration 150
+    Easing EaseOut
+End</pre>
+</div>
+</section>
+
+<section id="backend">
+<h2>Backend</h2>
+
+<div class="entry" data-search="backend api route server">
+<div class="name">Backend <span class="tag">Backend</span></div>
+<div class="desc">Defines backend functionality.</div>
+<pre>Backend
+    Route GET "/api/hello"
+        Return {
+            message: "Hello from InfiniteScript!"
+        }
+    End
+End</pre>
+</div>
+
+<div class="entry" data-search="route api get post">
+<div class="name">Route <span class="tag">Backend</span></div>
+<div class="desc">Defines an API endpoint.</div>
+<pre>Route GET "/api/hello"</pre>
+</div>
+</section>
+
+<section id="three">
+<h2>3D</h2>
+
+<div class="entry" data-search="scene 3d">
+<div class="name">Scene <span class="tag">3D</span></div>
+<div class="desc">Defines a 3D scene.</div>
+<pre>Scene Main
+    Camera MainCamera
+    End
+End</pre>
+</div>
+
+<div class="entry" data-search="camera 3d position">
+<div class="name">Camera <span class="tag">3D</span></div>
+<div class="desc">Defines a 3D camera.</div>
+<pre>Camera MainCamera
+    Position 0, 2, 8
+End</pre>
+</div>
+
+<div class="entry" data-search="model obj 3d">
+<div class="name">Model <span class="tag">3D</span></div>
+<div class="desc">Defines a 3D model.</div>
+<pre>Model Robot
+    File "robot.obj"
+    Position 0, 0, 0
+End</pre>
+</div>
+
+<div class="entry" data-search="light directional 3d">
+<div class="name">Light <span class="tag">3D</span></div>
+<div class="desc">Defines lighting for a scene.</div>
+<pre>Light Sun
+    Type Directional
+    Intensity 2
+End</pre>
+</div>
+</section>
+
+</main>
+</div>
+</div>
+
+<footer>
+<span>© 2026 InfiniteScript</span>
+<span>Syntax Dictionary · InfiniteScript v0.2.0</span>
+</footer>
+
+<script>
+const search=document.getElementById("search");
+const entries=[...document.querySelectorAll(".entry")];
+
+search.addEventListener("input",()=>{
+    const q=search.value.toLowerCase().trim();
+
+    entries.forEach(entry=>{
+        entry.style.display=
+            !q || entry.dataset.search.toLowerCase().includes(q)
+            ? ""
+            : "none";
+    });
+});
+</script>
+</body>
+</html>
