@@ -1,0 +1,16 @@
+﻿Local Storage Count = 0
+
+UI
+    Window Main
+        Title "InfiniteScript Event Test"
+
+        Button TestButton
+            Text "Click Me"
+
+            On Click
+                Change Count by 1
+                Say Count
+            End
+        End
+    End
+End

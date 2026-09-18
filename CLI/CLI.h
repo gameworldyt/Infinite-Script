@@ -1,4 +1,4 @@
-/*
+﻿/*
  * InfiniteScript
  *
  * Copyright (c) 2026 InfiniteScript Project.
@@ -8,6 +8,7 @@
  */
 #pragma once
 
+#include <filesystem>
 #include <string>
 
 class CLI
@@ -36,6 +37,18 @@ private:
     int initProject();
 
     int cleanProject();
+
+    bool isProjectDirectory() const;
+
+    std::filesystem::path
+    findProjectFile() const;
+
+    std::string
+    getProjectEntry(
+        const std::filesystem::path& projectFile) const;
+
+    std::string
+    resolveProjectEntry() const;
 
     std::string readFile(
         const std::string& file) const;

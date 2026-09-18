@@ -1,0 +1,9 @@
+﻿Local Storage Money = 100
+
+Function GiveMoney Amount
+    Change Money by Amount
+    Return Money
+End
+
+GiveMoney 50
+Say Money

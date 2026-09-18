@@ -1,0 +1,7 @@
+﻿Local Storage Score = 100
+
+If Score > 50
+    Say "Passed"
+Else
+    Say "Failed"
+End

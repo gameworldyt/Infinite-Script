@@ -1,0 +1,21 @@
+﻿Say "=== InfiniteScript Runtime Tests ==="
+
+Say "--- Basic output ---"
+Say "Hello"
+
+Say "--- Variables ---"
+Local Storage Money = 100
+Change Money by 50
+Say Money
+
+Say "--- For loop ---"
+For i = 1 to 5
+    Say i
+End
+
+Say "--- Reverse For loop ---"
+For i = 5 to 1
+    Say i
+End
+
+Say "--- Complete ---"

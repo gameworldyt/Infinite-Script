@@ -1,16 +1,9 @@
-/*
- * InfiniteScript
- *
- * Copyright (c) 2026 InfiniteScript Project.
- * All rights reserved.
- *
- * See LICENSE for licensing terms.
- */
-#pragma once
+﻿#pragma once
 
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 class EventSystem
 {
@@ -29,4 +22,3 @@ private:
         std::string,
         std::vector<Callback>> handlers;
 };
-

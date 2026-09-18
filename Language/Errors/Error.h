@@ -1,41 +1,36 @@
-/*
- * InfiniteScript
- *
- * Copyright (c) 2026 InfiniteScript Project.
- * All rights reserved.
- *
- * See LICENSE for licensing terms.
- */
-#pragma once
+﻿#pragma once
 
-#include "ErrorCode.h"
-
+#include <stdexcept>
 #include <string>
-#include <vector>
 
-struct Error
+class InfiniteScriptError :
+    public std::runtime_error
 {
-    ErrorCode code;
-    std::string message;
-
-    std::string file;
-    int line = 0;
-    int column = 0;
-
-    std::vector<std::string> suggestions;
-
-    Error(
-        ErrorCode code,
+public:
+    InfiniteScriptError(
+        const std::string& code,
         const std::string& message,
         const std::string& file = "",
         int line = 0,
-        int column = 0)
-        : code(code),
-          message(message),
-          file(file),
-          line(line),
-          column(column)
-    {
-    }
-};
+        int column = 0);
 
+    const std::string& code() const noexcept;
+
+    const std::string& file() const noexcept;
+
+    int line() const noexcept;
+
+    int column() const noexcept;
+
+    const std::string& message() const noexcept;
+
+    std::string formatted() const;
+
+private:
+    std::string errorCode;
+    std::string errorFile;
+    std::string errorMessage;
+
+    int errorLine;
+    int errorColumn;
+};

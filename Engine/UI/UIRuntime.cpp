@@ -1,12 +1,17 @@
-#include "UIRuntime.h"
+﻿#include "UIRuntime.h"
 
 #include <windows.h>
 #include <windowsx.h>
 
-#include <string>
 #include <iostream>
+#include <stdexcept>
+#include <string>
 
-UIRuntime::UIRuntime()
+#include "../../Standard/Events/EventSystem.h"
+
+UIRuntime::UIRuntime(
+    const std::shared_ptr<Interpreter>& interpreterInstance)
+    : interpreter(interpreterInstance)
 {
     instance =
         GetModuleHandleA(nullptr);
@@ -78,6 +83,15 @@ AST UIRuntime::findWindow(
 bool UIRuntime::show(
     const AST& root)
 {
+    if (!interpreter)
+    {
+        std::cerr
+            << "Error [INF2001]\n"
+            << "UI runtime requires an interpreter.\n";
+
+        return false;
+    }
+
     AST uiNode =
         findUI(root);
 
@@ -101,6 +115,8 @@ bool UIRuntime::show(
 
         return false;
     }
+
+    registerUIEvents(uiNode);
 
     if (!createWindow(windowNode))
         return false;
@@ -129,13 +145,79 @@ bool UIRuntime::show(
     return true;
 }
 
+void UIRuntime::registerUIEvents(
+    const AST& node)
+{
+    if (!node)
+        return;
+
+    if (node->type ==
+        NodeType::UIButton)
+    {
+        const std::string buttonName =
+            node->value;
+
+        for (const auto& child :
+             node->children)
+        {
+            if (!child)
+                continue;
+
+            if (child->type ==
+                NodeType::UIClick)
+            {
+                const std::string eventName =
+                    "UI.Click." +
+                    buttonName;
+
+                EventSystem::on(
+                    eventName,
+                    [this, child]()
+                    {
+                        try
+                        {
+                            for (const auto& action :
+                                 child->children)
+                            {
+                                if (action)
+                                    interpreter->
+                                        executeNode(
+                                            action);
+                            }
+                        }
+                        catch (
+                            const std::exception&
+                                error)
+                        {
+                            std::cerr
+                                << "Error [INF1700]\n"
+                                << "UI event failed: "
+                                << error.what()
+                                << '\n';
+                        }
+                    });
+
+                buttonEvent =
+                    eventName;
+            }
+        }
+    }
+
+    for (const auto& child :
+         node->children)
+    {
+        registerUIEvents(child);
+    }
+}
+
 void UIRuntime::collectElements(
     const AST& node)
 {
     if (!node)
         return;
 
-    if (node->type == NodeType::UITitle)
+    if (node->type ==
+        NodeType::UITitle)
     {
         if (!node->children.empty())
         {
@@ -143,7 +225,8 @@ void UIRuntime::collectElements(
                 node->children[0];
 
             if (value &&
-                value->type == NodeType::Literal)
+                value->type ==
+                    NodeType::Literal)
             {
                 windowTitle =
                     removeQuotes(
@@ -152,7 +235,8 @@ void UIRuntime::collectElements(
         }
     }
 
-    if (node->type == NodeType::UIText)
+    if (node->type ==
+        NodeType::UIText)
     {
         if (!node->children.empty())
         {
@@ -160,7 +244,8 @@ void UIRuntime::collectElements(
                 node->children[0];
 
             if (value &&
-                value->type == NodeType::Literal)
+                value->type ==
+                    NodeType::Literal)
             {
                 std::string text =
                     removeQuotes(
@@ -182,7 +267,8 @@ void UIRuntime::collectElements(
         }
     }
 
-    if (node->type == NodeType::UIButton)
+    if (node->type ==
+        NodeType::UIButton)
     {
         for (const auto& child :
              node->children)
@@ -222,12 +308,13 @@ bool UIRuntime::createWindow(
     collectElements(windowNode);
 
     const char* className =
-        "InfiniteScriptNativeWindowV2";
+        "InfiniteScriptNativeWindowV4";
 
     WNDCLASSA windowClass{};
 
     windowClass.style =
-        CS_HREDRAW | CS_VREDRAW;
+        CS_HREDRAW |
+        CS_VREDRAW;
 
     windowClass.lpfnWndProc =
         &UIRuntime::WindowProc;
@@ -324,7 +411,9 @@ void UIRuntime::drawText(
             0,
             0,
             0,
-            bold ? FW_BOLD : FW_NORMAL,
+            bold
+                ? FW_BOLD
+                : FW_NORMAL,
             FALSE,
             FALSE,
             FALSE,
@@ -332,12 +421,15 @@ void UIRuntime::drawText(
             OUT_DEFAULT_PRECIS,
             CLIP_DEFAULT_PRECIS,
             CLEARTYPE_QUALITY,
-            DEFAULT_PITCH | FF_DONTCARE,
+            DEFAULT_PITCH |
+                FF_DONTCARE,
             "Segoe UI");
 
     HFONT oldFont =
         static_cast<HFONT>(
-            SelectObject(hdc, font));
+            SelectObject(
+                hdc,
+                font));
 
     SetTextColor(
         hdc,
@@ -360,8 +452,8 @@ void UIRuntime::drawText(
         -1,
         &rect,
         alignment |
-        DT_WORDBREAK |
-        DT_NOPREFIX);
+            DT_WORDBREAK |
+            DT_NOPREFIX);
 
     SelectObject(
         hdc,
@@ -394,11 +486,15 @@ void UIRuntime::drawButton(
 
     HBRUSH oldBrush =
         static_cast<HBRUSH>(
-            SelectObject(hdc, brush));
+            SelectObject(
+                hdc,
+                brush));
 
     HPEN oldPen =
         static_cast<HPEN>(
-            SelectObject(hdc, pen));
+            SelectObject(
+                hdc,
+                pen));
 
     RoundRect(
         hdc,
@@ -516,16 +612,14 @@ void UIRuntime::handleClick(
     int mouseY)
 {
     if (mouseX >= buttonX &&
-        mouseX <= buttonX + buttonWidth &&
+        mouseX <=
+            buttonX + buttonWidth &&
         mouseY >= buttonY &&
-        mouseY <= buttonY + buttonHeight)
+        mouseY <=
+            buttonY + buttonHeight)
     {
-        MessageBoxA(
-            mainWindow,
-            "Welcome to InfiniteScript!",
-            "InfiniteScript",
-            MB_OK |
-            MB_ICONINFORMATION);
+        EventSystem::emit(
+            buttonEvent);
     }
 }
 
@@ -541,7 +635,8 @@ LRESULT CALLBACK UIRuntime::WindowProc(
                 hwnd,
                 GWLP_USERDATA));
 
-    if (message == WM_NCCREATE)
+    if (message ==
+        WM_NCCREATE)
     {
         CREATESTRUCTA* createStruct =
             reinterpret_cast<CREATESTRUCTA*>(
@@ -549,7 +644,8 @@ LRESULT CALLBACK UIRuntime::WindowProc(
 
         runtime =
             reinterpret_cast<UIRuntime*>(
-                createStruct->lpCreateParams);
+                createStruct->
+                    lpCreateParams);
 
         SetWindowLongPtrA(
             hwnd,
@@ -570,7 +666,8 @@ LRESULT CALLBACK UIRuntime::WindowProc(
                 &paint);
 
         if (runtime)
-            runtime->drawInterface(hdc);
+            runtime->drawInterface(
+                hdc);
 
         EndPaint(
             hwnd,
@@ -628,7 +725,7 @@ LRESULT CALLBACK UIRuntime::WindowProc(
     }
 
     case WM_SIZE:
-
+    {
         if (runtime)
         {
             InvalidateRect(
@@ -638,6 +735,7 @@ LRESULT CALLBACK UIRuntime::WindowProc(
         }
 
         return 0;
+    }
 
     case WM_DESTROY:
 
@@ -652,4 +750,3 @@ LRESULT CALLBACK UIRuntime::WindowProc(
         wParam,
         lParam);
 }
-

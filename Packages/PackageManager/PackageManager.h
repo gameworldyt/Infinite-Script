@@ -1,4 +1,4 @@
-/*
+﻿/*
  * InfiniteScript
  *
  * Copyright (c) 2026 InfiniteScript Project.
@@ -8,6 +8,7 @@
  */
 #pragma once
 
+#include <memory>
 #include <string>
 #include <unordered_map>
 
@@ -16,18 +17,23 @@
 class PackageManager
 {
 public:
-    bool registerPackage(
-        const PackageMetadata& package);
+    PackageManager();
+
+    void discover(
+        const std::string& directory);
 
     bool hasPackage(
         const std::string& name) const;
 
-    PackageMetadata getPackage(
+    std::shared_ptr<Package>
+    getPackage(
         const std::string& name) const;
+
+    std::size_t packageCount() const;
 
 private:
     std::unordered_map<
         std::string,
-        PackageMetadata> packages;
+        std::shared_ptr<Package>>
+        packages;
 };
-

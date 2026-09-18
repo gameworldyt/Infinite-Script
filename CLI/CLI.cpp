@@ -1,4 +1,4 @@
-/*
+﻿/*
  * InfiniteScript
  *
  * Copyright (c) 2026 InfiniteScript Project.
@@ -12,8 +12,8 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <memory>
+#include <sstream>
 
 #include "../Language/Lexer/Lexer.h"
 #include "../Language/Parser/Parser.h"
@@ -33,13 +33,53 @@ namespace
         if (node->type == NodeType::UI)
             return true;
 
-        for (const auto& child : node->children)
+        for (const auto& child :
+             node->children)
         {
             if (containsUI(child))
                 return true;
         }
 
         return false;
+    }
+
+    std::string trim(
+        const std::string& value)
+    {
+        const std::string whitespace =
+            " \t\r\n";
+
+        const std::size_t first =
+            value.find_first_not_of(whitespace);
+
+        if (first == std::string::npos)
+            return "";
+
+        const std::size_t last =
+            value.find_last_not_of(whitespace);
+
+        return value.substr(
+            first,
+            last - first + 1);
+    }
+
+    std::string removeQuotes(
+        const std::string& value)
+    {
+        std::string result =
+            trim(value);
+
+        if (
+            result.size() >= 2 &&
+            result.front() == '"' &&
+            result.back() == '"')
+        {
+            return result.substr(
+                1,
+                result.size() - 2);
+        }
+
+        return result;
     }
 }
 
@@ -54,12 +94,17 @@ void CLI::printHelp() const
         << "Commands:\n"
         << "  help                 Show this help message\n"
         << "  version              Show InfiniteScript version\n"
-        << "  run <file>           Run an .infs file\n"
-        << "  build <file>         Build/check an .infs file\n"
-        << "  check <file>         Check an .infs file\n"
+        << "  run [file]           Run an .infs file or project entry\n"
+        << "  build [file]         Build/check an .infs file or project entry\n"
+        << "  check [file]         Check an .infs file or project entry\n"
         << "  new <name>           Create a new project\n"
         << "  init                 Initialise a project here\n"
-        << "  clean                Remove build output\n";
+        << "  clean                Remove build output\n\n"
+
+        << "Project commands:\n"
+        << "  When run inside an InfiniteScript project,\n"
+        << "  run, build and check automatically use the\n"
+        << "  Entry value from InfiniteScript.project.\n";
 }
 
 void CLI::printVersion() const
@@ -97,6 +142,123 @@ std::string CLI::readFile(
     contents << input.rdbuf();
 
     return contents.str();
+}
+
+bool CLI::isProjectDirectory() const
+{
+    return fs::exists(
+               fs::current_path() /
+               "InfiniteScript.project");
+}
+
+fs::path CLI::findProjectFile() const
+{
+    fs::path current =
+        fs::current_path();
+
+    while (true)
+    {
+        fs::path candidate =
+            current /
+            "InfiniteScript.project";
+
+        if (fs::exists(candidate))
+            return candidate;
+
+        if (current == current.root_path())
+            break;
+
+        current =
+            current.parent_path();
+    }
+
+    return fs::path();
+}
+
+std::string CLI::getProjectEntry(
+    const fs::path& projectFile) const
+{
+    std::ifstream input(projectFile);
+
+    if (!input)
+    {
+        throw std::runtime_error(
+            "Could not open project file: " +
+            projectFile.string());
+    }
+
+    std::string line;
+
+    while (std::getline(input, line))
+    {
+        line = trim(line);
+
+        if (
+            line.empty() ||
+            line[0] == '#' ||
+            line[0] == ';')
+        {
+            continue;
+        }
+
+        const std::string prefix =
+            "Entry";
+
+        if (
+            line.size() >= prefix.size() &&
+            line.compare(
+                0,
+                prefix.size(),
+                prefix) == 0)
+        {
+            const std::size_t equals =
+                line.find('=');
+
+            if (equals == std::string::npos)
+                continue;
+
+            std::string value =
+                line.substr(equals + 1);
+
+            value =
+                removeQuotes(value);
+
+            if (!value.empty())
+                return value;
+        }
+    }
+
+    throw std::runtime_error(
+        "Project does not define an Entry.");
+}
+
+std::string CLI::resolveProjectEntry() const
+{
+    fs::path projectFile =
+        findProjectFile();
+
+    if (projectFile.empty())
+    {
+        throw std::runtime_error(
+            "No InfiniteScript.project found.");
+    }
+
+    std::string entry =
+        getProjectEntry(projectFile);
+
+    fs::path entryPath =
+        projectFile.parent_path() /
+        entry;
+
+    if (!fileExists(
+            entryPath.string()))
+    {
+        throw std::runtime_error(
+            "Project entry file does not exist: " +
+            entryPath.string());
+    }
+
+    return entryPath.string();
 }
 
 int CLI::checkFile(
@@ -204,16 +366,15 @@ int CLI::runFile(
             return 1;
         }
 
-        /*
-         * Infinite UI programs are handled by the
-         * native Windows UI runtime.
-         *
-         * Normal InfiniteScript programs continue
-         * to use the standard interpreter.
-         */
+        auto interpreter =
+            std::make_shared<Interpreter>();
+
         if (containsUI(program))
         {
-            UIRuntime uiRuntime;
+            interpreter->execute(program);
+
+            UIRuntime uiRuntime(
+                interpreter);
 
             if (!uiRuntime.show(program))
             {
@@ -227,9 +388,7 @@ int CLI::runFile(
             return 0;
         }
 
-        Interpreter interpreter;
-
-        interpreter.execute(program);
+        interpreter->execute(program);
 
         return 0;
     }
@@ -359,6 +518,9 @@ int CLI::newProject(
         fs::create_directories(
             projectPath / "Build");
 
+        fs::create_directories(
+            projectPath / "Source");
+
         std::ofstream projectFile(
             projectPath /
             "InfiniteScript.project");
@@ -367,7 +529,7 @@ int CLI::newProject(
             << "Name = \""
             << name
             << "\"\n"
-            << "Version = \"0.1.0\"\n"
+            << "Version = \"1.0.0\"\n"
             << "Entry = \"main.infs\"\n";
 
         projectFile.close();
@@ -394,6 +556,7 @@ int CLI::newProject(
             << "/\n"
             << "  +-- main.infs\n"
             << "  +-- InfiniteScript.project\n"
+            << "  +-- Source/\n"
             << "  +-- Packages/\n"
             << "  +-- Assets/\n"
             << "  +-- Build/\n";
@@ -444,6 +607,9 @@ int CLI::initProject()
         fs::create_directories(
             current / "Build");
 
+        fs::create_directories(
+            current / "Source");
+
         std::ofstream project(
             projectFile);
 
@@ -451,7 +617,7 @@ int CLI::initProject()
             << "Name = \""
             << name
             << "\"\n"
-            << "Version = \"0.1.0\"\n"
+            << "Version = \"1.0.0\"\n"
             << "Entry = \"main.infs\"\n";
 
         project.close();
@@ -555,44 +721,65 @@ int CLI::run(
 
     if (command == "run")
     {
-        if (argc < 3)
+        if (argc >= 3)
+            return runFile(argv[2]);
+
+        try
+        {
+            return runFile(
+                resolveProjectEntry());
+        }
+        catch (const std::exception& error)
         {
             std::cerr
-                << "Error [INF1002]\n"
-                << "Missing file argument.\n";
+                << "Error [INF1601]\n"
+                << error.what()
+                << '\n';
 
             return 1;
         }
-
-        return runFile(argv[2]);
     }
 
     if (command == "build")
     {
-        if (argc < 3)
+        if (argc >= 3)
+            return buildFile(argv[2]);
+
+        try
+        {
+            return buildFile(
+                resolveProjectEntry());
+        }
+        catch (const std::exception& error)
         {
             std::cerr
-                << "Error [INF1002]\n"
-                << "Missing file argument.\n";
+                << "Error [INF1601]\n"
+                << error.what()
+                << '\n';
 
             return 1;
         }
-
-        return buildFile(argv[2]);
     }
 
     if (command == "check")
     {
-        if (argc < 3)
+        if (argc >= 3)
+            return checkFile(argv[2]);
+
+        try
+        {
+            return checkFile(
+                resolveProjectEntry());
+        }
+        catch (const std::exception& error)
         {
             std::cerr
-                << "Error [INF1002]\n"
-                << "Missing file argument.\n";
+                << "Error [INF1601]\n"
+                << error.what()
+                << '\n';
 
             return 1;
         }
-
-        return checkFile(argv[2]);
     }
 
     if (command == "new")

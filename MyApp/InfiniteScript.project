@@ -1,0 +1,3 @@
+Name = "MyApp"
+Version = "0.1.0"
+Entry = "main.infs"

@@ -1,0 +1,7 @@
+﻿Say "Before event"
+
+On Test
+    Say "Event fired!"
+End
+
+Say "After event"

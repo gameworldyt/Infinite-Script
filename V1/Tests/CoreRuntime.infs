@@ -1,0 +1,34 @@
+﻿Say "=== InfiniteScript V1 Test Suite ==="
+
+Say "--- Variables ---"
+Local Storage Money = 100
+Change Money by 50
+Say Money
+
+Say "--- Conditions ---"
+If Money > 100
+    Say "Condition passed"
+Else
+    Say "Condition failed"
+End
+
+Say "--- For Loop ---"
+For i = 1 to 5
+    Say i
+End
+
+Say "--- Reverse Loop ---"
+For i = 5 to 1
+    Say i
+End
+
+Say "--- Function ---"
+Function AddMoney Amount
+    Change Money by Amount
+    Return Money
+End
+
+AddMoney 50
+Say Money
+
+Say "--- Complete ---"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <windows.h>
 #include <memory>
@@ -6,14 +6,18 @@
 #include <vector>
 
 #include "../../Language/Parser/AST.h"
+#include "../../Language/Runtime/Interpreter.h"
 
 class UIRuntime
 {
 public:
-    UIRuntime();
+    UIRuntime(
+        const std::shared_ptr<Interpreter>& interpreter);
+
     ~UIRuntime();
 
-    bool show(const AST& root);
+    bool show(
+        const AST& root);
 
 private:
     static LRESULT CALLBACK WindowProc(
@@ -50,6 +54,9 @@ private:
         int mouseX,
         int mouseY);
 
+    void registerUIEvents(
+        const AST& node);
+
     std::string removeQuotes(
         std::string value);
 
@@ -60,7 +67,10 @@ private:
         const AST& node);
 
     HWND mainWindow = nullptr;
+
     HINSTANCE instance = nullptr;
+
+    std::shared_ptr<Interpreter> interpreter;
 
     std::string windowTitle =
         "InfiniteScript";
@@ -74,10 +84,14 @@ private:
     std::string buttonText =
         "Get Started";
 
+    std::string buttonEvent =
+        "UI.Click.GetStarted";
+
     bool buttonHovered = false;
 
     int buttonX = 0;
     int buttonY = 0;
+
     int buttonWidth = 190;
     int buttonHeight = 52;
 };
