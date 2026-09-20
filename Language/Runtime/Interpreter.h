@@ -1,12 +1,4 @@
-﻿/*
- * InfiniteScript
- *
- * Copyright (c) 2026 InfiniteScript Project.
- * All rights reserved.
- *
- * See LICENSE for licensing terms.
- */
-#pragma once
+﻿#pragma once
 
 #include <memory>
 #include <string>
@@ -15,6 +7,7 @@
 
 #include "../Parser/AST.h"
 #include "../../Packages/PackageManager/PackageManager.h"
+#include "../../Packages/Registry/PackageRegistry.h"
 #include "Environment.h"
 
 struct FunctionDefinition
@@ -53,6 +46,8 @@ private:
 
     std::unique_ptr<PackageManager>
         packageManager;
+
+    PackageRegistry packageRegistry;
 
     bool returning = false;
     bool breaking = false;

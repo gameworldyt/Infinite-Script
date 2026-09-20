@@ -10,7 +10,9 @@
 #include "PackageManager.h"
 
 #include <filesystem>
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 namespace fs = std::filesystem;
 
@@ -95,6 +97,27 @@ PackageManager::getPackage(
         return nullptr;
 
     return found->second;
+}
+
+std::vector<std::shared_ptr<Package>>
+PackageManager::getPackages() const
+{
+    std::vector<
+        std::shared_ptr<Package>>
+        result;
+
+    result.reserve(
+        packages.size());
+
+    for (
+        const auto& pair :
+        packages)
+    {
+        result.push_back(
+            pair.second);
+    }
+
+    return result;
 }
 
 std::size_t

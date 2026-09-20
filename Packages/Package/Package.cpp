@@ -56,6 +56,21 @@ namespace
 
         return result;
     }
+
+    std::string removeUtf8Bom(
+        const std::string& value)
+    {
+        if (
+            value.size() >= 3 &&
+            static_cast<unsigned char>(value[0]) == 0xEF &&
+            static_cast<unsigned char>(value[1]) == 0xBB &&
+            static_cast<unsigned char>(value[2]) == 0xBF)
+        {
+            return value.substr(3);
+        }
+
+        return value;
+    }
 }
 
 Package::Package()
@@ -87,7 +102,9 @@ bool Package::load(
             manifest.string());
     }
 
-    std::ifstream input(manifest);
+    std::ifstream input(
+        manifest,
+        std::ios::binary);
 
     if (!input)
     {
@@ -98,8 +115,16 @@ bool Package::load(
 
     std::string line;
 
+    bool firstLine = true;
+
     while (std::getline(input, line))
     {
+        if (firstLine)
+        {
+            line = removeUtf8Bom(line);
+            firstLine = false;
+        }
+
         line = trim(line);
 
         if (
@@ -117,31 +142,47 @@ bool Package::load(
             continue;
 
         std::string key =
-            trim(line.substr(0, equals));
+            trim(
+                line.substr(
+                    0,
+                    equals));
 
         std::string value =
             removeQuotes(
-                line.substr(equals + 1));
+                line.substr(
+                    equals + 1));
 
         if (key == "Package")
+        {
             name = value;
+        }
         else if (key == "Version")
+        {
             version = value;
+        }
         else if (key == "Entry")
+        {
             entry = value;
+        }
     }
 
     if (name.empty())
+    {
         throw std::runtime_error(
             "Package manifest is missing Package.");
+    }
 
     if (version.empty())
+    {
         throw std::runtime_error(
             "Package manifest is missing Version.");
+    }
 
     if (entry.empty())
+    {
         throw std::runtime_error(
             "Package manifest is missing Entry.");
+    }
 
     fs::path entryFile =
         root / entry;

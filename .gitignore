@@ -1,7 +1,22 @@
+﻿# Build output
 *.exe
-*.obj
-*.o
-*.dll
-*.pdb
+Build/
+
+# Local Windows test binaries
+policy_test.cpp
+
+# Local signing certificates / release signing workspace
+Tools/Signing/
+
+# Release output
+Tools/Release/
+
+# IDE / editor files
 .vscode/
 .vs/
+*.user
+*.suo
+
+# Temporary files
+*.tmp
+*.log

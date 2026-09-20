@@ -12,45 +12,27 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
-#include "../../Language/Lexer/Lexer.h"
-#include "../../Language/Parser/Parser.h"
+#include "../Lexer/Lexer.h"
+#include "../Parser/Parser.h"
 
+#include "../../Standard/Events/EventSystem.h"
 #include "../../Standard/Input/InputService.h"
 #include "../../Standard/Random/RandomService.h"
 #include "../../Standard/Storage/Storage.h"
-#include "../../Standard/Events/EventSystem.h"
 
 namespace fs = std::filesystem;
 
 namespace
 {
-    std::string trim(
-        const std::string& value)
-    {
-        const std::string whitespace =
-            " \t\r\n";
-
-        const std::size_t first =
-            value.find_first_not_of(whitespace);
-
-        if (first == std::string::npos)
-            return "";
-
-        const std::size_t last =
-            value.find_last_not_of(whitespace);
-
-        return value.substr(
-            first,
-            last - first + 1);
-    }
-
     std::string removeQuotes(
         const std::string& value)
     {
-        std::string result =
-            trim(value);
+        std::string result = value;
 
         if (
             result.size() >= 2 &&
@@ -238,6 +220,7 @@ void Interpreter::executeNode(
         case NodeType::Input:
         {
             std::string type = "String";
+
             std::string variableName =
                 node->value;
 
@@ -691,21 +674,11 @@ void Interpreter::importPackage(
             std::make_unique<PackageManager>();
     }
 
-    fs::path packageDirectory;
-
-    if (!packageDirectory.empty())
-    {
-        // Reserved for future package resolution.
-    }
-
-    fs::path searchRoot;
-
-    if (!packageDirectory.empty())
-    {
-        searchRoot =
-            packageDirectory;
-    }
-    else
+    /*
+     * If the registry does not contain any packages,
+     * discover the default Packages directory.
+     */
+    if (packageRegistry.size() == 0)
     {
         fs::path current =
             fs::current_path();
@@ -719,47 +692,77 @@ void Interpreter::importPackage(
                 fs::exists(packages) &&
                 fs::is_directory(packages))
             {
-                searchRoot =
-                    packages;
+                packageManager->discover(
+                    packages.string());
+
+                for (
+                    const auto& discoveredName :
+                    std::vector<std::string>{
+                        packageName})
+                {
+                    if (
+                        packageManager->hasPackage(
+                            discoveredName))
+                    {
+                        auto package =
+                            packageManager->getPackage(
+                                discoveredName);
+
+                        packageRegistry.registerPackage(
+                            package);
+                    }
+                }
+
                 break;
             }
 
-            if (current == current.root_path())
+            if (current ==
+                current.root_path())
+            {
                 break;
+            }
 
             current =
                 current.parent_path();
         }
     }
 
-    if (searchRoot.empty())
+    /*
+     * If the requested package is not registered,
+     * try discovering it from the package manager.
+     */
+    if (!packageRegistry.contains(packageName))
     {
-        throw std::runtime_error(
-            "Could not find a Packages directory for import '" +
-            packageName +
-            "'.");
+        if (packageManager->hasPackage(packageName))
+        {
+            packageRegistry.registerPackage(
+                packageManager->getPackage(
+                    packageName));
+        }
     }
 
-    fs::path packageDirectoryPath =
-        searchRoot / packageName;
+    /*
+     * Resolve the package through the registry.
+     */
+    auto package =
+        packageRegistry.get(
+            packageName);
 
-    if (
-        !fs::exists(packageDirectoryPath) ||
-        !fs::is_directory(packageDirectoryPath))
+    if (!package)
     {
         throw std::runtime_error(
             "Package '" +
             packageName +
-            "' was not found in " +
-            searchRoot.string() +
-            ".");
+            "' was not found.");
     }
 
-    auto package =
-        std::make_shared<Package>();
-
-    package->load(
-        packageDirectoryPath.string());
+    if (!package->isLoaded())
+    {
+        throw std::runtime_error(
+            "Package '" +
+            packageName +
+            "' is not loaded.");
+    }
 
     const fs::path entryFile =
         fs::path(
@@ -769,10 +772,10 @@ void Interpreter::importPackage(
     const std::string source =
         readTextFile(entryFile);
 
-    Lexer lexer(source);
+    Lexer lexer;
 
     auto tokens =
-        lexer.tokenize();
+        lexer.tokenize(source);
 
     Parser parser(tokens);
 
@@ -832,6 +835,7 @@ RuntimeValue Interpreter::callFunction(
             previousEnvironment);
 
     returning = false;
+
     returnValue =
         std::monostate{};
 
@@ -1073,4 +1077,21 @@ void Interpreter::setPackageDirectory(
 
     packageManager->discover(
         directory);
+
+    packageRegistry.clear();
+
+    const auto packages =
+        packageManager->getPackages();
+
+    for (
+        const auto& package :
+        packages)
+    {
+        if (!package)
+            continue;
+
+        packageRegistry.registerPackage(
+            package);
+    }
 }
+

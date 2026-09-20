@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "../Package/Package.h"
 
@@ -28,6 +29,9 @@ public:
     std::shared_ptr<Package>
     getPackage(
         const std::string& name) const;
+
+    std::vector<std::shared_ptr<Package>>
+    getPackages() const;
 
     std::size_t packageCount() const;
 
